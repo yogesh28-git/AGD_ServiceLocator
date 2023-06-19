@@ -6,7 +6,7 @@ using ServiceLocator.Utilities;
 public class GameService : GenericMonoSingleton<GameService>
 {
     // Services:
-    private MapService mapService;
+    private MapService mapService { get; set; }
 
     // Scriptable Objects:
     [SerializeField] private MapScriptableObject mapScriptableObject;
