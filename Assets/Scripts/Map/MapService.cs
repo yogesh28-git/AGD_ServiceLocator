@@ -2,13 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MapService
+namespace ServiceLocator.Map
 {
-    private MapScriptableObject mapScriptableObject;
+    public class MapService
+    {
+        private MapScriptableObject mapScriptableObject;
 
-    public MapService(MapScriptableObject mapScriptableObject) => this.mapScriptableObject = mapScriptableObject;
+        private int currentMapId;
+        public int CurrentMapId => currentMapId;
 
-    public List<Vector3> GetWayPointsForMap(int mapId) => mapScriptableObject.MapDataByLevels.Find(mapData => mapData.MapID == mapId).WayPoints;
+        public MapService(MapScriptableObject mapScriptableObject) => this.mapScriptableObject = mapScriptableObject;
 
-    public Vector3 GetSpawnPositionForMap(int mapId) => mapScriptableObject.MapDataByLevels.Find(mapData => mapData.MapID == mapId).SpawningPoint;
+        public List<Vector3> GetWayPointsForMap(int mapId) => mapScriptableObject.MapDataByLevels.Find(mapData => mapData.MapID == mapId).WayPoints;
+
+        public Vector3 GetSpawnPositionForMap(int mapId) => mapScriptableObject.MapDataByLevels.Find(mapData => mapData.MapID == mapId).SpawningPoint;
+    }
 }
