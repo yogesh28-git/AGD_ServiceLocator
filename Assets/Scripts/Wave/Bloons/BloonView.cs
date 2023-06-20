@@ -12,7 +12,7 @@ namespace ServiceLocator.Bloon
 
         public void PopBloon()
         {
-            // Disable the renderer & Play Pop VFX
+            // Disable the renderer & Play Bloon Pop Animation
         }
     }
 }
