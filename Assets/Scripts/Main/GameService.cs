@@ -28,10 +28,8 @@ namespace ServiceLocator.Main
         // Scriptable Objects:
         [SerializeField] private MapScriptableObject mapScriptableObject;
         [SerializeField] private WaveScriptableObject waveScriptableObject;
-        [SerializeField] private BloonTypePrefabMap bloonTypePrefabMap;
         [SerializeField] private SoundScriptableObject soundScriptableObject;
-        [SerializeField] private MonkeyTypePrefabMap monkeyTypePrefabMap;
-        [SerializeField] private ProjectileTypePrefabMap projectileTypePrefabMap;
+        [SerializeField] private PlayerScriptableObject playerScriptableObject;
 
         // Scene Referneces:
         [SerializeField] private AudioSource SFXSource;
@@ -40,9 +38,9 @@ namespace ServiceLocator.Main
         private void Start()
         {
             mapService = new MapService(mapScriptableObject);
-            waveService = new WaveService(waveScriptableObject, bloonTypePrefabMap.BloonConfigurations);
+            waveService = new WaveService(waveScriptableObject);
             soundService = new SoundService(soundScriptableObject, SFXSource, BGSource);
-            playerService = new PlayerService(monkeyTypePrefabMap.monkeyConfigurations, projectileTypePrefabMap.projectileConfigurations);
+            playerService = new PlayerService(playerScriptableObject);
 
         }
     } 

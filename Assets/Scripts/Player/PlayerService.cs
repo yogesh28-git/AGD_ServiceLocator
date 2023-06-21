@@ -7,17 +7,19 @@ namespace ServiceLocator.Player
 {
     public class PlayerService
     {
+        private PlayerScriptableObject playerScriptableObject;
         private ProjectilePool projectilePool;
-        private List<MonkeyConfiguration> monkeyConfigurations;
         
         private List<MonkeyController> activeMonkeys;
         private int health;
         private int money;
 
-        public PlayerService(List<MonkeyConfiguration> monkeyConfigurations, List<ProjectileConfiguration> projectileConfigurations)
+        public PlayerService(PlayerScriptableObject playerScriptableObject)
         {
-            this.monkeyConfigurations = monkeyConfigurations;
-            projectilePool = new ProjectilePool(projectileConfigurations);
+            this.playerScriptableObject = playerScriptableObject;
+            projectilePool = new ProjectilePool(playerScriptableObject.ProjectileConfigurations);
+            health = playerScriptableObject.Health;
+            money = playerScriptableObject.Money;
         }
 
         public void Update()

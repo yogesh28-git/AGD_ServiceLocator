@@ -14,10 +14,10 @@ namespace ServiceLocator.Wave
         private int currentWaveId;
         private int activeBloons;
 
-        public WaveService(WaveScriptableObject waveScriptableObject, List<BloonConfiguration> bloonConfigurations)
+        public WaveService(WaveScriptableObject waveScriptableObject)
         {
             this.waveScriptableObject = waveScriptableObject;
-            bloonPool = new BloonPool(bloonConfigurations);
+            bloonPool = new BloonPool(waveScriptableObject.BloonTypePrefabMap.BloonConfigurations);
         }
 
         public void LoadWaveDataForMap(int mapId) => waveDatas = waveScriptableObject.WaveConfigurations.Find(config => config.MapID == mapId).WaveDatas;

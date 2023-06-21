@@ -1,12 +1,14 @@
 using System.Collections.Generic;
 using UnityEngine;
+using ServiceLocator.Bloon;
 
 namespace ServiceLocator.Wave
 {
     [CreateAssetMenu(fileName = "WaveScriptableObject", menuName = "ScriptableObjects/WaveScriptableObject")]
     public class WaveScriptableObject : ScriptableObject
     {
-        public float spawnRate;
+        public float SpawnRate;
         public List<WaveConfiguration> WaveConfigurations;
+        public BloonTypePrefabMap BloonTypePrefabMap;
     }
 }
