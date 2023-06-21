@@ -2,6 +2,7 @@ using UnityEngine;
 
 namespace ServiceLocator.Player.Projectile
 {
+    [CreateAssetMenu(fileName = "ProjectileScriptableObject ", menuName = "ScriptableObjects/ProjectileScriptableObject")]
     public class ProjectileScriptableObject : ScriptableObject
     {
         public float Speed;

@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64a36a3047554874d81858c8219a5541, type: 3}
+  m_Name: PlayerScriptableObject
+  m_EditorClassIdentifier: 
+  Health: 100
+  Money: 200
+  MonkeyConfigurations:
+  - Type: 0
+    Prefab: {fileID: 534948837250446180, guid: a7b6d0649e9427c4682e70a84c411ca9, type: 3}
+    MonkeyScriptableObject: {fileID: 11400000, guid: f8fc1658394cf7748917d02dda45e571, type: 2}
+  - Type: 1
+    Prefab: {fileID: 4153936676241517788, guid: eac174a2bed8bd64fbbfd2bb69b78b88, type: 3}
+    MonkeyScriptableObject: {fileID: 11400000, guid: a9370d00ef28c7c4d996a0a4e78ede0f, type: 2}
+  - Type: 2
+    Prefab: {fileID: 4096465855865953158, guid: 8fa90eccd09912242a2914c4b986a9f8, type: 3}
+    MonkeyScriptableObject: {fileID: 11400000, guid: 4e36024359151174bb7ebcd801abd128, type: 2}
+  ProjectileConfigurations:
+  - Type: 0
+    Prefab: {fileID: 6850870937923115200, guid: 03952a5844279ed4cb3170465698aa9e, type: 3}
+    ProjectileScriptableObject: {fileID: 11400000, guid: e340dda60fff3ef448ee486910a3234a, type: 2}
+  - Type: 1
+    Prefab: {fileID: 2003389246674468386, guid: 0c7d821057e4c484ca474a4283f46dbf, type: 3}
+    ProjectileScriptableObject: {fileID: 11400000, guid: ffbcdc01c3e2c6643b339f98c899c9b0, type: 2}
+  - Type: 2
+    Prefab: {fileID: 1941058414334380540, guid: 860198e2e04a7334eb253884ec78518f, type: 3}
+    ProjectileScriptableObject: {fileID: 11400000, guid: 729fb4288e059134aafab135e1b4f9e9, type: 2}

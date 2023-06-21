@@ -41,7 +41,6 @@ namespace ServiceLocator.Main
             waveService = new WaveService(waveScriptableObject);
             soundService = new SoundService(soundScriptableObject, SFXSource, BGSource);
             playerService = new PlayerService(playerScriptableObject);
-
         }
     } 
 }

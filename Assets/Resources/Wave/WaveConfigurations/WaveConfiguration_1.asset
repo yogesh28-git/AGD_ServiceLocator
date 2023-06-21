@@ -15,12 +15,12 @@ MonoBehaviour:
   MapID: 1
   WaveDatas:
   - WaveID: 1
-    ListOfBloons: 
+    ListOfBloons: 0000000000000000000000000000000000000000
   - WaveID: 2
-    ListOfBloons: 
+    ListOfBloons: 0000000001000000000000000000000001000000
   - WaveID: 3
-    ListOfBloons: 
+    ListOfBloons: 0100000001000000010000000100000001000000
   - WaveID: 4
-    ListOfBloons: 
+    ListOfBloons: 0100000001000000020000000100000002000000
   - WaveID: 5
-    ListOfBloons: 
+    ListOfBloons: 0200000002000000020000000200000002000000

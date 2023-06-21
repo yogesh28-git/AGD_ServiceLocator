@@ -176,7 +176,7 @@ TilemapRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 64e470acbf2bec546a0ae9b87afe7f9a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -196,7 +196,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0.13999999, y: 0.13999999, z: 0}
   m_MaxChunkCount: 16
@@ -2297,10 +2297,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mapScriptableObject: {fileID: 11400000, guid: 412d441209954ab47a08973a630f316a, type: 2}
   waveScriptableObject: {fileID: 11400000, guid: 1a1805a3a12f21d4c9847d85958ab9ce, type: 2}
-  bloonTypePrefabMap: {fileID: 0}
-  soundScriptableObject: {fileID: 0}
-  monkeyTypePrefabMap: {fileID: 0}
-  projectileTypePrefabMap: {fileID: 0}
+  soundScriptableObject: {fileID: 11400000, guid: 1fe1d13385d932c4987f15e4b7d1cc49, type: 2}
+  playerScriptableObject: {fileID: 11400000, guid: ba423c4fbfbefa248b49a627b9e607b6, type: 2}
   SFXSource: {fileID: 0}
   BGSource: {fileID: 0}
 --- !u!1 &1497791997

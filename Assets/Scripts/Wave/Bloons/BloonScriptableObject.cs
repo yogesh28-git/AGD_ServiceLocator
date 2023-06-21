@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace ServiceLocator.Bloon
 {
-    [CreateAssetMenu(fileName = "BloonScriptableObject", menuName = "ScriptableObects/BloonScriptableObject")]
+    [CreateAssetMenu(fileName = "BloonScriptableObject", menuName = "ScriptableObjects/BloonScriptableObject")]
     public class BloonScriptableObject : ScriptableObject
     {
         public int Health;

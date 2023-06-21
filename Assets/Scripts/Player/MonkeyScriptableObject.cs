@@ -7,9 +7,8 @@ namespace ServiceLocator.Player
     [CreateAssetMenu(fileName = "MonkeyScriptableObject", menuName = "ScriptableObjects/MonkeyScriptableObject")]
     public class MonkeyScriptableObject : ScriptableObject
     {
-        public int Health;
-        public int Damage;
         public float RotationSpeed;
         public ProjectileType projectileType;
+        public int Cost;
     }
 }

@@ -18,7 +18,6 @@ MonoBehaviour:
     WayPoints:
     - {x: -7.5, y: 3.5, z: 0}
     - {x: -4.5, y: 3.5, z: 0}
-    - {x: -4.5, y: -1.5, z: 0}
     - {x: -0.5, y: -1.5, z: 0}
     - {x: -0.5, y: 3.5, z: 0}
     - {x: 6.5, y: 3.5, z: 0}
@@ -27,6 +26,3 @@ MonoBehaviour:
     - {x: 3.5, y: -3.5, z: 0}
     - {x: -2.5, y: -3.5, z: 0}
     - {x: -2.5, y: -6, z: 0}
-  - MapID: 2
-    SpawningPoint: {x: 0, y: 0, z: 0}
-    WayPoints: []
