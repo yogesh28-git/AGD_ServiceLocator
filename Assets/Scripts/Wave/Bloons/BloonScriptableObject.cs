@@ -9,5 +9,6 @@ namespace ServiceLocator.Bloon
         public int Damage;
         public int Reward;
         public float Speed;
+        public Sprite Sprite;
     }
 }

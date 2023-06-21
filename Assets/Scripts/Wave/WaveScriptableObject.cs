@@ -9,6 +9,6 @@ namespace ServiceLocator.Wave
     {
         public float SpawnRate;
         public List<WaveConfiguration> WaveConfigurations;
-        public BloonTypePrefabMap BloonTypePrefabMap;
+        public BloonTypeDataMap BloonTypeDataMap;
     }
 }

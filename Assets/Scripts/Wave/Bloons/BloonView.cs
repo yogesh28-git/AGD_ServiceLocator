@@ -6,9 +6,18 @@ namespace ServiceLocator.Bloon
 {
     public class BloonView : MonoBehaviour
     {
-        private BloonController bloonController;
+        private BloonController controller;
+        private SpriteRenderer spriteRenderer;
+        private void Awake()
+        {
+            spriteRenderer = GetComponent<SpriteRenderer>();
+        }
 
-        public void SetController(BloonController bloonController) => this.bloonController = bloonController;
+        public void SetController(BloonController bloonController) => this.controller = bloonController;
+
+        private void Update() => controller.FollowWayPoints();
+
+        public void SetRenderer(Sprite spriteToSet) => spriteRenderer.sprite = spriteToSet;
 
         public void PopBloon()
         {

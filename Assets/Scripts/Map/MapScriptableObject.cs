@@ -13,6 +13,7 @@ namespace ServiceLocator.Map
     public struct MapData
     {
         public int MapID;
+        public Grid MapPrefab;
         public Vector3 SpawningPoint;
         public List<Vector3> WayPoints;
     }

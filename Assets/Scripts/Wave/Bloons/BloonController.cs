@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using ServiceLocator.Main;
 
 namespace ServiceLocator.Bloon
 {
@@ -9,29 +10,32 @@ namespace ServiceLocator.Bloon
         private BloonView bloonView;
         private BloonScriptableObject bloonScriptableObject;
 
+        private const float waypointThreshold = 0.1f;
         private List<Vector3> waypoints;
         private int currentHealth;
+        private int currentWaypointIndex;
 
-        public void Init(BloonView bloonPrefab, BloonScriptableObject bloonScriptableObject)
+        public BloonController(BloonView bloonPrefab)
         {
-            ResetBloon();
             bloonView = Object.Instantiate(bloonPrefab);
             bloonView.SetController(this);
+            waypoints = new List<Vector3>();
+        }
+
+        public void Init(BloonScriptableObject bloonScriptableObject)
+        {
             this.bloonScriptableObject = bloonScriptableObject;
             currentHealth = bloonScriptableObject.Health;
+            bloonView.SetRenderer(bloonScriptableObject.Sprite);
+            bloonView.gameObject.SetActive(true);
+            SetWayPoints();
         }
 
-        private void ResetBloon()
+        public void SetWayPoints()
         {
-            if (bloonView != null)
-                Object.Destroy(bloonView.gameObject);
-            waypoints.Clear();
-        }
-
-        public void SetWayPoints(Vector3 spawnPosition, List<Vector3> waypointsToFollow)
-        {
-            bloonView.transform.position = spawnPosition;
-            this.waypoints = waypointsToFollow;
+            bloonView.transform.position = GameService.Instance.MapService.GetSpawnPositionForCurrentMap();
+            waypoints = GameService.Instance.MapService.GetWayPointsForCurrentMap();
+            currentWaypointIndex = 0;
         }
 
         public void TakeDamage(int damageToTake)
@@ -43,24 +47,34 @@ namespace ServiceLocator.Bloon
             }
         }
 
-        private void FollowWayPoints()
+        public void FollowWayPoints()
         {
-
+            if(currentWaypointIndex < waypoints.Count)
+            {
+                Vector3 direction = waypoints[currentWaypointIndex] - bloonView.transform.position;
+                bloonView.transform.Translate(direction.normalized * bloonScriptableObject.Speed * Time.deltaTime);
+                if (direction.magnitude < waypointThreshold)
+                    currentWaypointIndex++;
+            }
+            else
+            {
+                ReachedFinalWayPoint();
+            }
         }
 
-        private bool IfClearedMap()
+        private void ReachedFinalWayPoint()
         {
-            throw new System.NotImplementedException();
-            // Inform WaveService of this event.
+            GameService.Instance.WaveService.RemoveBloon(this);
+            // TODO:
             // Reduce Player's Health
+            bloonView.gameObject.SetActive(false);
         }
 
         private void PopBloon()
         {
             bloonView.PopBloon();
-            // Return this back to the Pool.
+            GameService.Instance.WaveService.RemoveBloon(this);
             // Give Reward to player.
-            // Inform WaveService of this event.
         }
     }
 }

@@ -8,13 +8,21 @@ namespace ServiceLocator.Map
     {
         private MapScriptableObject mapScriptableObject;
 
-        private int currentMapId;
-        public int CurrentMapId => currentMapId;
+        private MapData currentMapData;
+        public int CurrentMapId => currentMapData.MapID;
+
 
         public MapService(MapScriptableObject mapScriptableObject) => this.mapScriptableObject = mapScriptableObject;
 
-        public List<Vector3> GetWayPointsForMap(int mapId) => mapScriptableObject.MapDataByLevels.Find(mapData => mapData.MapID == mapId).WayPoints;
+        public void LoadMap(int mapId)
+        {
+            currentMapData = mapScriptableObject.MapDataByLevels.Find(mapData => mapData.MapID == mapId);
+            Object.Instantiate(currentMapData.MapPrefab);
+        }
 
-        public Vector3 GetSpawnPositionForMap(int mapId) => mapScriptableObject.MapDataByLevels.Find(mapData => mapData.MapID == mapId).SpawningPoint;
+        public List<Vector3> GetWayPointsForCurrentMap() => currentMapData.WayPoints;
+
+        public Vector3 GetSpawnPositionForCurrentMap() => currentMapData.SpawningPoint;
+
     }
 }
