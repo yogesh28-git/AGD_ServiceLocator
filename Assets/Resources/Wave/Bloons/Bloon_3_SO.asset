@@ -16,3 +16,4 @@ MonoBehaviour:
   Damage: 50
   Reward: 500
   Speed: 2
+  Sprite: {fileID: 21300000, guid: 938fcbc90814b2c4890471d69411c853, type: 3}

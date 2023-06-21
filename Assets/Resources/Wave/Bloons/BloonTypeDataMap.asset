@@ -10,15 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: db73e03820c7fa542bca17f19ce1f7e5, type: 3}
-  m_Name: BloonTypePrefabMap
+  m_Name: BloonTypeDataMap
   m_EditorClassIdentifier: 
+  BloonPrefab: {fileID: 5809090260471785846, guid: 36b92d4f037c49f42bb4578971e272e1, type: 3}
   BloonConfigurations:
   - BloonType: 0
-    BloonPrefab: {fileID: 1017808328452568198, guid: a6b45800fa52f154a8d17f079d231e4f, type: 3}
     BloonScriptableObject: {fileID: 11400000, guid: 45005e1015669c241a23ada66cdd35d7, type: 2}
   - BloonType: 1
-    BloonPrefab: {fileID: 8437079952830702364, guid: 54dde85050f5db44ab344f129284fba2, type: 3}
     BloonScriptableObject: {fileID: 11400000, guid: ea94ed707f901674ab17fa92fb1e75fc, type: 2}
   - BloonType: 2
-    BloonPrefab: {fileID: 2289514350054070880, guid: 3e67242b3e96d9c468a5886b3108baf3, type: 3}
     BloonScriptableObject: {fileID: 11400000, guid: 62dbe99bc77263640a7119cdf12fc398, type: 2}

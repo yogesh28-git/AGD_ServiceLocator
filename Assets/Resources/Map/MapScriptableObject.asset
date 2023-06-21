@@ -14,10 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MapDataByLevels:
   - MapID: 1
+    MapPrefab: {fileID: 7441656525615922827, guid: 82818e93c5e1c014882708bd06ff2d67, type: 3}
     SpawningPoint: {x: -7.5, y: -6, z: 0}
     WayPoints:
     - {x: -7.5, y: 3.5, z: 0}
     - {x: -4.5, y: 3.5, z: 0}
+    - {x: -4.5, y: -1.5, z: 0}
     - {x: -0.5, y: -1.5, z: 0}
     - {x: -0.5, y: 3.5, z: 0}
     - {x: 6.5, y: 3.5, z: 0}
