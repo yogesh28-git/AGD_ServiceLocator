@@ -6,18 +6,23 @@ namespace ServiceLocator.Player.Projectile
 {
     public class ProjectilePool : GenericObjectPool<ProjectileController>
     {
-        List<ProjectileConfiguration> projectileConfigurations;
+        private ProjectileView projectilePrefab;
+        private List<ProjectileScriptableObject> projectileScriptableObjects;
 
-        public ProjectilePool(List<ProjectileConfiguration> projectileConfigurations) => this.projectileConfigurations = projectileConfigurations;
+        public ProjectilePool(ProjectileView projectilePrefab, List<ProjectileScriptableObject> projectileScriptableObjects)
+        {
+            this.projectilePrefab = projectilePrefab;
+            this.projectileScriptableObjects = projectileScriptableObjects;
+        }
 
         public ProjectileController GetProjectile(ProjectileType projectileType)
         {
-            ProjectileConfiguration configToUse = projectileConfigurations.Find(config => config.Type == projectileType);
             ProjectileController projectile = GetItem();
-            projectile.Init(configToUse.Prefab, configToUse.ProjectileScriptableObject);
+            ProjectileScriptableObject scriptableObjectToUse = projectileScriptableObjects.Find(so => so.Type == projectileType);
+            projectile.Init(scriptableObjectToUse);
             return projectile;
         }
 
-        protected override ProjectileController CreateItem() => new ProjectileController();
+        protected override ProjectileController CreateItem() => new ProjectileController(projectilePrefab);
     }
 }

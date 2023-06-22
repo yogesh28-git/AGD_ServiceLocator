@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using ServiceLocator.Bloon;
+using ServiceLocator.Main;
 
 namespace ServiceLocator.Player.Projectile
 {
@@ -9,32 +11,53 @@ namespace ServiceLocator.Player.Projectile
         private ProjectileView projectileView;
         private ProjectileScriptableObject projectileScriptableObject;
 
-        public void Init(ProjectileView projectilePrefab, ProjectileScriptableObject projectileScriptableObject)
+        private BloonController target;
+
+        public ProjectileController(ProjectileView projectilePrefab)
         {
-            ResetProjectile();
             projectileView = Object.Instantiate(projectilePrefab);
             projectileView.SetController(this);
-            this.projectileScriptableObject = projectileScriptableObject;
         }
 
-        private void ResetProjectile()
+        public void Init(ProjectileScriptableObject projectileScriptableObject)
         {
-            if(projectileView != null)
-            {
-                Object.Destroy(projectileView.gameObject);
-            }
+            target = null;
+            this.projectileScriptableObject = projectileScriptableObject;
+            projectileView.SetSprite(projectileScriptableObject.Sprite);
+            projectileView.gameObject.SetActive(true);
         }
 
         public void SetPosition(Vector3 spawnPosition) => projectileView.transform.position = spawnPosition;
 
-        public void UpdateProjectileMotion()
+        public void SetTarget(BloonController target)
         {
-            
+            this.target = target;
+            RotateTowardsTarget();
         }
 
-        public void OnProjectileEnteredTrigger(GameObject collidedObject)
+        private void RotateTowardsTarget()
         {
-            
+            Vector3 direction = target.Position - projectileView.transform.position;
+            float angle = (Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg) - 90;
+            projectileView.transform.rotation = Quaternion.Euler(0f, 0f, angle);
+        }
+
+        public void UpdateProjectileMotion()
+        {
+            if(target != null)
+                projectileView.transform.Translate(Vector2.up * projectileScriptableObject.Speed * Time.deltaTime, Space.Self);
+        }
+
+        public void OnHitBloon(BloonController bloonHit)
+        {
+            bloonHit.TakeDamage(projectileScriptableObject.Damage);
+            ResetProjectile();
+        }
+
+        public void ResetProjectile()
+        {
+            projectileView.gameObject.SetActive(false);
+            GameService.Instance.PlayerService.ReturnProjectileToPool(this);
         }
     }
 }
