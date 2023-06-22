@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5139194720756256827}
   - component: {fileID: 5355014899312550557}
   - component: {fileID: 2289514350054070880}
+  - component: {fileID: -8571682898837091712}
   m_Layer: 0
   m_Name: Bloon_3
   m_TagString: Untagged
@@ -97,3 +98,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f049f0ac351c30149a183523fa0f0de2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!58 &-8571682898837091712
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7305892852215037668}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5
