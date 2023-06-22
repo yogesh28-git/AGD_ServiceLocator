@@ -17,6 +17,7 @@ namespace ServiceLocator.UI
             GameService.Instance.MapService.LoadMap(MapId);
             GameService.Instance.WaveService.LoadWaveDataForMap(MapId);
             GameService.Instance.UIService.OnMapSelected();
+            GameService.Instance.PlayerService.InputService.SetInputState(Player.Input.SpawnInput.ENABLED);
         }
     }
 }
