@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b32fea2b81d77ab45b7095799571b00f, type: 3}
   m_Name: Bloon_2_SO
   m_EditorClassIdentifier: 
+  Type: 1
   Health: 5
   Damage: 5
   Reward: 20
-  Speed: 5
+  Speed: 3
   Sprite: {fileID: 21300000, guid: 76e216bf4a602e844859eab4ff48117f, type: 3}

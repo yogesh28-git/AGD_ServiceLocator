@@ -12,7 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e9f78841389ef74295702b371ae6a27, type: 3}
   m_Name: Monkey_1_SO
   m_EditorClassIdentifier: 
-  Damage: 1
+  Type: 0
+  Prefab: {fileID: 534948837250446180, guid: a7b6d0649e9427c4682e70a84c411ca9, type: 3}
   RotationSpeed: 100
   projectileType: 0
+  Range: 3
   Cost: 10
+  AttackableBloons: 0000000001000000
+  AttackRate: 1
