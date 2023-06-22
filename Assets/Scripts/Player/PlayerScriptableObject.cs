@@ -10,23 +10,8 @@ namespace ServiceLocator.Player
     {
         public int Health;
         public int Money;
-        public List<MonkeyConfiguration> MonkeyConfigurations;
-        public List<ProjectileConfiguration> ProjectileConfigurations;
-    }
-
-    [System.Serializable]
-    public struct MonkeyConfiguration
-    {
-        public MonkeyType Type;
-        public MonkeyView Prefab;
-        public MonkeyScriptableObject MonkeyScriptableObject;
-    }
-
-    [System.Serializable]
-    public struct ProjectileConfiguration
-    {
-        public ProjectileType Type;
-        public ProjectileView Prefab;
-        public ProjectileScriptableObject ProjectileScriptableObject;
+        public List<MonkeyScriptableObject> MonkeyScriptableObjects;
+        public List<ProjectileScriptableObject> ProjectileScriptableObjects;
+        public ProjectileView ProjectilePrefab;
     }
 }
