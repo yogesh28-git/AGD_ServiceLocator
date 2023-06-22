@@ -8,19 +8,19 @@ namespace ServiceLocator.Bloon
     public class BloonPool : GenericObjectPool<BloonController>
     {
         private BloonView bloonPrefab;
-        private List<BloonConfiguration> bloonConfigurations;
+        private List<BloonScriptableObject> bloonScriptableObjects;
 
-        public BloonPool(BloonView bloonPrefab, List<BloonConfiguration> bloonConfigurations)
+        public BloonPool(BloonView bloonPrefab, List<BloonScriptableObject> bloonScriptableObjects)
         {
             this.bloonPrefab = bloonPrefab;
-            this.bloonConfigurations = bloonConfigurations;
+            this.bloonScriptableObjects = bloonScriptableObjects;
         }
 
         public BloonController GetBloon(BloonType bloonType)
         {
             BloonController bloon = GetItem();
-            BloonConfiguration configToUse = bloonConfigurations.Find(config => config.BloonType == bloonType);
-            bloon.Init(configToUse.BloonScriptableObject);
+            BloonScriptableObject scriptableObjectToUse = bloonScriptableObjects.Find(so => so.Type == bloonType);
+            bloon.Init(scriptableObjectToUse);
             return bloon;
         }
 

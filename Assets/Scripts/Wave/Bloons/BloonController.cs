@@ -15,10 +15,12 @@ namespace ServiceLocator.Bloon
         private int currentHealth;
         private int currentWaypointIndex;
 
+        public Vector3 Position => bloonView.transform.position;
+
         public BloonController(BloonView bloonPrefab)
         {
             bloonView = Object.Instantiate(bloonPrefab);
-            bloonView.SetController(this);
+            bloonView.Controller = this;
             waypoints = new List<Vector3>();
         }
 
@@ -45,6 +47,8 @@ namespace ServiceLocator.Bloon
             {
                 PopBloon();
             }
+
+            Debug.Log("Bloon hit", bloonView.gameObject);
         }
 
         public void FollowWayPoints()
@@ -65,16 +69,18 @@ namespace ServiceLocator.Bloon
         private void ReachedFinalWayPoint()
         {
             GameService.Instance.WaveService.RemoveBloon(this);
-            // TODO:
-            // Reduce Player's Health
+            GameService.Instance.PlayerService.TakeDamage(bloonScriptableObject.Damage);
             bloonView.gameObject.SetActive(false);
         }
 
         private void PopBloon()
         {
             bloonView.PopBloon();
+            bloonView.gameObject.SetActive(false);
             GameService.Instance.WaveService.RemoveBloon(this);
-            // Give Reward to player.
+            GameService.Instance.PlayerService.GetReward(bloonScriptableObject.Reward);
         }
+
+        public BloonType GetBloonType() => bloonScriptableObject.Type;
     }
 }

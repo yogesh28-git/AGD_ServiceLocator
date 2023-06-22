@@ -7,13 +7,13 @@ namespace ServiceLocator.Bloon
     public class BloonView : MonoBehaviour
     {
         private BloonController controller;
+        public BloonController Controller { get => controller; set => controller = value; }
+
         private SpriteRenderer spriteRenderer;
         private void Awake()
         {
             spriteRenderer = GetComponent<SpriteRenderer>();
         }
-
-        public void SetController(BloonController bloonController) => this.controller = bloonController;
 
         private void Update() => controller.FollowWayPoints();
 
@@ -21,6 +21,8 @@ namespace ServiceLocator.Bloon
 
         public void PopBloon()
         {
+            spriteRenderer.sprite = null;
+            // TODO:
             // Disable the renderer & Play Bloon Pop Animation
         }
     }

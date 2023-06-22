@@ -9,13 +9,13 @@ namespace ServiceLocator.Bloon
     public class BloonTypeDataMap : ScriptableObject
     {
         public BloonView BloonPrefab;
-        public List<BloonConfiguration> BloonConfigurations;
+        public List<BloonScriptableObject> BloonScriptableObjects;
     }
 
-    [System.Serializable]
+/*    [System.Serializable]
     public struct BloonConfiguration
     {
         public BloonType BloonType;
         public BloonScriptableObject BloonScriptableObject;
-    }
+    }*/
 }
