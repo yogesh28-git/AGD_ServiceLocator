@@ -22,31 +22,34 @@ namespace ServiceLocator.Main
         [SerializeField] private UIService uiService;
         public UIService UIService => uiService;
 
-/*        private SoundService soundService;
-        public SoundService SoundService => soundService;
-*/
-/*        private PlayerService playerService;
+        /*        private SoundService soundService;
+                public SoundService SoundService => soundService;
+        */
+        private PlayerService playerService;
         public PlayerService PlayerService => playerService;
-*/
+
 
         // Scriptable Objects:
         [SerializeField] private MapScriptableObject mapScriptableObject;
         [SerializeField] private WaveScriptableObject waveScriptableObject;
-/*        [SerializeField] private SoundScriptableObject soundScriptableObject;
+//        [SerializeField] private SoundScriptableObject soundScriptableObject;
         [SerializeField] private PlayerScriptableObject playerScriptableObject;
-*/
+
         // Scene Referneces:
-/*        [SerializeField] private AudioSource SFXSource;
-        [SerializeField] private AudioSource BGSource;
-*/
+        /*        [SerializeField] private AudioSource SFXSource;
+                [SerializeField] private AudioSource BGSource;
+        */
         private void Start()
         {
             mapService = new MapService(mapScriptableObject);
             waveService = new WaveService(waveScriptableObject);
- /*           soundService = new SoundService(soundScriptableObject, SFXSource, BGSource);
+//            soundService = new SoundService(soundScriptableObject, SFXSource, BGSource);
             playerService = new PlayerService(playerScriptableObject);
- */       }
+        }
 
-
+        private void Update()
+        {
+            playerService.Update();
+        }
     } 
 }
