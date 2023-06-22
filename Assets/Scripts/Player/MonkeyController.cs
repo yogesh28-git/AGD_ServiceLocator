@@ -11,35 +11,65 @@ namespace ServiceLocator.Player
         private MonkeyScriptableObject monkeyScriptableObject;
         private ProjectilePool projectilePool;
 
-        private BloonController targetedBloon;
+        private List<BloonController> bloonsInRange;
+        private float attackTimer;
 
-        public MonkeyController(MonkeyView monkeyPrefab, MonkeyScriptableObject monkeyScriptableObject, ProjectilePool projectilePool)
+        public MonkeyController(MonkeyScriptableObject monkeyScriptableObject, ProjectilePool projectilePool)
         {
-            monkeyView = Object.Instantiate(monkeyPrefab);
+            monkeyView = Object.Instantiate(monkeyScriptableObject.Prefab);
             monkeyView.SetController(this);
+            monkeyView.SetTriggerRadius(monkeyScriptableObject.Range);
+            
             this.monkeyScriptableObject = monkeyScriptableObject;
             this.projectilePool = projectilePool;
+            bloonsInRange = new List<BloonController>();
+            ResetAttackTimer();
         }
 
-        public void SetPosition(Vector3 positionToSet)
+        public void SetPosition(Vector3 positionToSet) => monkeyView.transform.position = positionToSet;
+
+        public void BloonEnteredRange(BloonController bloon)
         {
-            monkeyView.transform.position = positionToSet;
+            if (CanAttackBloon(bloon.GetBloonType()))
+                bloonsInRange.Add(bloon);
         }
 
-        public void SetTargetBloon(BloonController bloonToSetTarget)
+        public void BloonExitedRange(BloonController bloon)
         {
-            targetedBloon = bloonToSetTarget;
+            if (CanAttackBloon(bloon.GetBloonType()))
+                bloonsInRange.Remove(bloon);
         }
+
+        private bool CanAttackBloon(BloonType bloonType) => monkeyScriptableObject.AttackableBloons.Contains(bloonType);
 
         public void UpdateMonkey()
         {
-            // Rotate towards the target if any.
-            // Shoot at the target according toi the spawn rate.
+            if(bloonsInRange.Count > 0)
+            {
+                RotateTowardsTarget(bloonsInRange[0]);
+                ShootAtTarget(bloonsInRange[0]);
+            }
         }
 
-        private void ShootAtTarget()
+        private void RotateTowardsTarget(BloonController targetBloon)
         {
-            // Use Projectile Pool to shoot.
+            Vector3 direction = targetBloon.Position - monkeyView.transform.position;
+            float angle = (Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg) - 90;
+            monkeyView.transform.rotation = Quaternion.Euler(0f, 0f, angle);
         }
+
+        private void ShootAtTarget(BloonController targetBloon)
+        {
+            attackTimer -= Time.deltaTime;
+            if(attackTimer <= 0)
+            {
+                ProjectileController projectile = projectilePool.GetProjectile(monkeyScriptableObject.projectileType);
+                projectile.SetPosition(monkeyView.transform.position);
+                projectile.SetTarget(targetBloon);
+                ResetAttackTimer();
+            }
+        }
+
+        private void ResetAttackTimer() => attackTimer = monkeyScriptableObject.AttackRate;
     }
 }
