@@ -17,8 +17,20 @@ namespace ServiceLocator.UI
         [SerializeField] private GameObject LevelSelectionPanel;
         [SerializeField] private Button Map1Button;
 
+        // Monkey Selection UI:
+        private MonkeySelectionUIController monkeySelectionController;
+        [SerializeField] private GameObject MonkeySelectionPanel;
+        [SerializeField] private Transform cellContainer;
+        [SerializeField] private MonkeyCellView monkeyCellPrefab;
+        [SerializeField] private List<MonkeyCellScriptableObject> monkeyCellScriptableObjects;
+
+
         private void Start()
         {
+            monkeySelectionController = new MonkeySelectionUIController(cellContainer, monkeyCellPrefab, monkeyCellScriptableObjects);
+            MonkeySelectionPanel.SetActive(false);
+            monkeySelectionController.SetActive(false);
+
             GameplayPanel.SetActive(false);
             LevelSelectionPanel.SetActive(true);
             nextWaveButton.onClick.AddListener(OnNextWaveButton);
@@ -28,6 +40,8 @@ namespace ServiceLocator.UI
         {
             LevelSelectionPanel.SetActive(false);
             GameplayPanel.SetActive(true);
+            MonkeySelectionPanel.SetActive(true);
+            monkeySelectionController.SetActive(true);
         }
 
         private void OnNextWaveButton()
