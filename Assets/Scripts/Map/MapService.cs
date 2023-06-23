@@ -23,7 +23,7 @@ namespace ServiceLocator.Map
 
         public List<Vector3> GetWayPointsForCurrentMap() => currentMapData.WayPoints;
 
-        public Vector3 GetSpawnPositionForCurrentMap() => currentMapData.SpawningPoint;
+        public Vector3 GetBloonSpawnPositionForCurrentMap() => currentMapData.SpawningPoint;
 
         public bool TryGetSpawnPosition(Vector3 cursorPosition, out Vector3 spawnPosition)
         {
@@ -38,25 +38,37 @@ namespace ServiceLocator.Map
             }
             else
             {
-                Debug.Log($"Monkey Overlapping");
                 spawnPosition = default;
                 return false;
             }
-
         }
 
-        public bool CanSpawnOnPosition(Vector3 cellPosition)
+        private bool CanSpawnOnPosition(Vector3 cellPosition)
         {
-            Collider2D[] colliders = Physics2D.OverlapCircleAll((Vector2)cellPosition, 0.1f);
-            
+            Collider2D[] colliders = Physics2D.OverlapCircleAll(cellPosition, 0.1f);
+            return HasClickedOnTileMap(colliders) && !IsOverLappingMonkey(colliders);
+        }
+
+        private bool HasClickedOnTileMap(Collider2D[] colliders)
+        {
+            foreach(Collider2D collider in colliders)
+            {
+                if (collider.GetComponent<TilemapCollider2D>() != null)
+                    return true;
+            }
+            return false;
+        }
+
+        private bool IsOverLappingMonkey(Collider2D[] colliders)
+        {
             foreach (Collider2D collider in colliders)
             {
                 if (collider.gameObject.GetComponent<MonkeyView>() != null && !collider.isTrigger)
                 {
-                    return false;
+                    return true;
                 }
             }
-            return true;
+            return false;
         }
     }
 }

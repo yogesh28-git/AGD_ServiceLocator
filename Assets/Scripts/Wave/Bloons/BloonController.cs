@@ -35,7 +35,7 @@ namespace ServiceLocator.Bloon
 
         public void SetWayPoints()
         {
-            bloonView.transform.position = GameService.Instance.MapService.GetSpawnPositionForCurrentMap();
+            bloonView.transform.position = GameService.Instance.MapService.GetBloonSpawnPositionForCurrentMap();
             waypoints = GameService.Instance.MapService.GetWayPointsForCurrentMap();
             currentWaypointIndex = 0;
         }
@@ -47,8 +47,6 @@ namespace ServiceLocator.Bloon
             {
                 PopBloon();
             }
-
-            Debug.Log("Bloon hit", bloonView.gameObject);
         }
 
         public void FollowWayPoints()

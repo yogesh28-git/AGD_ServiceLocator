@@ -42,8 +42,14 @@ namespace ServiceLocator.Player
             {
                 monkey?.UpdateMonkey();
             }
+        }
 
-            inputService?.UpdateInputs();
+        public void TrySpawningMonkey(MonkeyType monkeyType, Vector3 dropPosition)
+        {
+            if (GameService.Instance.MapService.TryGetSpawnPosition(dropPosition, out Vector3 spawnPosition))
+            {
+                SpawnMonkey(monkeyType, spawnPosition);
+            }
         }
 
         public void SpawnMonkey(MonkeyType monkeyType, Vector3 spawnPosition)
