@@ -53,6 +53,7 @@ namespace ServiceLocator.Bloon
         {
             if(currentWaypointIndex < waypoints.Count)
             {
+                bloonView.transform.LookAt(waypoints[currentWaypointIndex]);
                 Vector3 direction = waypoints[currentWaypointIndex] - bloonView.transform.position;
                 bloonView.transform.Translate(direction.normalized * bloonScriptableObject.Speed * Time.deltaTime);
                 if (direction.magnitude < waypointThreshold)
