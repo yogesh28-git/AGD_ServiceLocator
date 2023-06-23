@@ -44,8 +44,11 @@ namespace ServiceLocator.Player
             }
         }
 
-        public void TrySpawningMonkey(MonkeyType monkeyType, Vector3 dropPosition)
+        public void TrySpawningMonkey(MonkeyType monkeyType, int monkeyCost, Vector3 dropPosition)
         {
+            if (monkeyCost > money)
+                return;
+
             if (GameService.Instance.MapService.TryGetSpawnPosition(dropPosition, out Vector3 spawnPosition))
             {
                 SpawnMonkey(monkeyType, spawnPosition);

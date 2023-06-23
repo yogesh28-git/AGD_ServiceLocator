@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PlayerScriptableObject
   m_EditorClassIdentifier: 
   Health: 100
-  Money: 200
+  Money: 300
   MonkeyScriptableObjects:
   - {fileID: 11400000, guid: f8fc1658394cf7748917d02dda45e571, type: 2}
   - {fileID: 11400000, guid: a9370d00ef28c7c4d996a0a4e78ede0f, type: 2}
