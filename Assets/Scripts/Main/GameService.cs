@@ -3,9 +3,7 @@ using ServiceLocator.Utilities;
 using ServiceLocator.Map;
 using ServiceLocator.Wave;
 using ServiceLocator.Sound;
-using ServiceLocator.Bloon;
 using ServiceLocator.Player;
-using ServiceLocator.Player.Projectile;
 using ServiceLocator.UI;
 
 namespace ServiceLocator.Main
@@ -22,9 +20,9 @@ namespace ServiceLocator.Main
         [SerializeField] private UIService uiService;
         public UIService UIService => uiService;
 
-        /*        private SoundService soundService;
-                public SoundService SoundService => soundService;
-        */
+        private SoundService soundService;
+        public SoundService SoundService => soundService;
+
         private PlayerService playerService;
         public PlayerService PlayerService => playerService;
 
@@ -32,18 +30,18 @@ namespace ServiceLocator.Main
         // Scriptable Objects:
         [SerializeField] private MapScriptableObject mapScriptableObject;
         [SerializeField] private WaveScriptableObject waveScriptableObject;
-//        [SerializeField] private SoundScriptableObject soundScriptableObject;
+        [SerializeField] private SoundScriptableObject soundScriptableObject;
         [SerializeField] private PlayerScriptableObject playerScriptableObject;
 
         // Scene Referneces:
-        /*        [SerializeField] private AudioSource SFXSource;
-                [SerializeField] private AudioSource BGSource;
-        */
+        [SerializeField] private AudioSource SFXSource;
+        [SerializeField] private AudioSource BGSource;
+
         private void Start()
         {
             mapService = new MapService(mapScriptableObject);
             waveService = new WaveService(waveScriptableObject);
-//            soundService = new SoundService(soundScriptableObject, SFXSource, BGSource);
+            soundService = new SoundService(soundScriptableObject, SFXSource, BGSource);
             playerService = new PlayerService(playerScriptableObject);
         }
 
