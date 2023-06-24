@@ -1,10 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using ServiceLocator.Player.Projectile;
-using UnityEngine.Tilemaps;
 using ServiceLocator.Main;
-using ServiceLocator.Player.Input;
 
 namespace ServiceLocator.Player
 {
@@ -12,8 +9,6 @@ namespace ServiceLocator.Player
     {
         private PlayerScriptableObject playerScriptableObject;
         private ProjectilePool projectilePool;
-        private InputService inputService;
-        public InputService InputService => inputService;
 
         private List<MonkeyController> activeMonkeys;
         private int health;
@@ -23,7 +18,6 @@ namespace ServiceLocator.Player
         {
             this.playerScriptableObject = playerScriptableObject;
             projectilePool = new ProjectilePool(playerScriptableObject.ProjectilePrefab, playerScriptableObject.ProjectileScriptableObjects);
-            inputService = new InputService();
             InitializeVariables();
         }
 
