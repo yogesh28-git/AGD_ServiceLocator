@@ -42,7 +42,7 @@ namespace ServiceLocator.Bloon
 
         public void TakeDamage(int damageToTake)
         {
-            currentHealth = currentHealth - damageToTake <= 0 ? 0 : currentHealth = damageToTake;
+            currentHealth = currentHealth - damageToTake <= 0 ? 0 : currentHealth -= damageToTake;
             if(currentHealth <= 0)
             {
                 PopBloon();
