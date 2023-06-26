@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Projectile_1_SO
   m_EditorClassIdentifier: 
   Type: 0
-  Sprite: {fileID: 21300000, guid: 8e270b22d761bc84c99922ee04a1cdb7, type: 3}
+  Sprite: {fileID: 21300000, guid: b19ffe815f82cd543922e5cf2b0c753c, type: 3}
   Speed: 10
   Damage: 1
