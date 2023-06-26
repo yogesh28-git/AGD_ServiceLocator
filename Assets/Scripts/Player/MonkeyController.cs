@@ -54,7 +54,7 @@ namespace ServiceLocator.Player
         private void RotateTowardsTarget(BloonController targetBloon)
         {
             Vector3 direction = targetBloon.Position - monkeyView.transform.position;
-            float angle = (Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg) - 90;
+            float angle = (Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg) + 180;
             monkeyView.transform.rotation = Quaternion.Euler(0f, 0f, angle);
         }
 
