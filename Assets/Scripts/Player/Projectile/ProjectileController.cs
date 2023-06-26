@@ -38,14 +38,14 @@ namespace ServiceLocator.Player.Projectile
         private void RotateTowardsTarget()
         {
             Vector3 direction = target.Position - projectileView.transform.position;
-            float angle = (Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg) - 90;
+            float angle = (Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg) + 180;
             projectileView.transform.rotation = Quaternion.Euler(0f, 0f, angle);
         }
 
         public void UpdateProjectileMotion()
         {
             if(target != null)
-                projectileView.transform.Translate(Vector2.up * projectileScriptableObject.Speed * Time.deltaTime, Space.Self);
+                projectileView.transform.Translate(Vector2.left * projectileScriptableObject.Speed * Time.deltaTime, Space.Self);
         }
 
         public void OnHitBloon(BloonController bloonHit)
