@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3934034ca108e1a4686f9b956731a07d, type: 3}
   m_Name: Monkey_1_CellSO
   m_EditorClassIdentifier: 
-  Name: Monkey 1
-  Sprite: {fileID: 21300000, guid: f49cdfc925a0d104b84c0e2c3c221b39, type: 3}
+  Type: 0
+  Name: Sharp Monkey
+  Sprite: {fileID: 21300000, guid: 240762edad70d1647bd6fe833e1ee3a4, type: 3}
   Cost: 50
