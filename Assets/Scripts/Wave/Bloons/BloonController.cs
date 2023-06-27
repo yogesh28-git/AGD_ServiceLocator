@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using ServiceLocator.Main;
@@ -75,9 +74,10 @@ namespace ServiceLocator.Bloon
         private void PopBloon()
         {
             bloonView.PopBloon();
-            GameService.Instance.WaveService.RemoveBloon(this);
             GameService.Instance.PlayerService.GetReward(bloonScriptableObject.Reward);
         }
+
+        public void OnPopAnimationPlayed() => GameService.Instance.WaveService.RemoveBloon(this);
 
         public BloonType GetBloonType() => bloonScriptableObject.Type;
     }

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace ServiceLocator.Bloon
@@ -32,6 +30,7 @@ namespace ServiceLocator.Bloon
         {
             spriteRenderer.sprite = null;
             gameObject.SetActive(false);
+            Controller.OnPopAnimationPlayed();
         }
     }
 }

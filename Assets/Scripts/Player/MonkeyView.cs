@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using ServiceLocator.Bloon;
 
@@ -10,6 +8,7 @@ namespace ServiceLocator.Player
         private MonkeyController controller;
         private CircleCollider2D rangeTriggerCollider;
         private Animator monkeyAnimator;
+        [SerializeField] private SpriteRenderer rangeSpriteRenderer;
 
         private void Awake()
         {
@@ -19,7 +18,11 @@ namespace ServiceLocator.Player
 
         public void SetController(MonkeyController controller) => this.controller = controller;
 
-        public void SetTriggerRadius(float radiusToSet) => rangeTriggerCollider.radius = radiusToSet;
+        public void SetTriggerRadius(float radiusToSet)
+        {
+            rangeTriggerCollider.radius = radiusToSet;
+            rangeSpriteRenderer.transform.localScale = new Vector3(radiusToSet, radiusToSet, 1);
+        }
 
         public void PlayAnimation(MonkeyAnimation animationToPlay) => monkeyAnimator.Play(animationToPlay.ToString(), 0);
 
