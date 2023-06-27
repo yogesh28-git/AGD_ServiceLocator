@@ -75,7 +75,6 @@ namespace ServiceLocator.Bloon
         private void PopBloon()
         {
             bloonView.PopBloon();
-            bloonView.gameObject.SetActive(false);
             GameService.Instance.WaveService.RemoveBloon(this);
             GameService.Instance.PlayerService.GetReward(bloonScriptableObject.Reward);
         }

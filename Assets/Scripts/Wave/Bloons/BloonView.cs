@@ -8,11 +8,14 @@ namespace ServiceLocator.Bloon
     {
         private BloonController controller;
         public BloonController Controller { get => controller; set => controller = value; }
-
+        
         private SpriteRenderer spriteRenderer;
+        private Animator animator;
+
         private void Awake()
         {
             spriteRenderer = GetComponent<SpriteRenderer>();
+            animator = GetComponent<Animator>();
         }
 
         private void Update() => controller.FollowWayPoints();
@@ -21,9 +24,14 @@ namespace ServiceLocator.Bloon
 
         public void PopBloon()
         {
+            animator.enabled = true;
+            animator.Play("Pop", 0);
+        }
+
+        public void PopAnimationPlayed()
+        {
             spriteRenderer.sprite = null;
-            // TODO:
-            // Disable the renderer & Play Bloon Pop Animation
+            gameObject.SetActive(false);
         }
     }
 }
