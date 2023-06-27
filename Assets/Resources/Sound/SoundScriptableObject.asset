@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioList:
   - soundType: 0
-    audio: {fileID: 0}
+    audio: {fileID: 8300000, guid: 3f9331a45389133429864b8efe645d0f, type: 3}
   - soundType: 1
     audio: {fileID: 0}
   - soundType: 2
