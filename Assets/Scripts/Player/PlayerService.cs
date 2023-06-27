@@ -46,6 +46,7 @@ namespace ServiceLocator.Player
             if (GameService.Instance.MapService.TryGetSpawnPosition(dropPosition, out Vector3 spawnPosition))
             {
                 SpawnMonkey(monkeyType, spawnPosition);
+                GameService.Instance.SoundService.PlaySoundEffects(Sound.SoundType.SpawnMonkey);
             }
         }
 

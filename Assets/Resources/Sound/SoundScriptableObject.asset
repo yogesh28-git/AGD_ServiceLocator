@@ -18,8 +18,8 @@ MonoBehaviour:
   - soundType: 1
     audio: {fileID: 8300000, guid: 2461c67aa6c45234ca2f87eb1f901d96, type: 3}
   - soundType: 2
-    audio: {fileID: 0}
+    audio: {fileID: 8300000, guid: 059befafca62017418488b541a1ba491, type: 3}
   - soundType: 3
-    audio: {fileID: 0}
+    audio: {fileID: 8300000, guid: 06927eac73568914c9ef11298ea9aa49, type: 3}
   - soundType: 4
     audio: {fileID: 0}
