@@ -46,6 +46,7 @@ namespace ServiceLocator.Bloon
             if(currentHealth <= 0)
             {
                 PopBloon();
+                GameService.Instance.SoundService.PlaySoundEffects(Sound.SoundType.BloonPop);
             }
         }
 
