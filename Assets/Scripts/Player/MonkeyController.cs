@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using ServiceLocator.Bloon;
 using ServiceLocator.Player.Projectile;
+using ServiceLocator.Main;
 
 namespace ServiceLocator.Player
 {
@@ -66,6 +67,7 @@ namespace ServiceLocator.Player
                 ProjectileController projectile = projectilePool.GetProjectile(monkeyScriptableObject.projectileType);
                 projectile.SetPosition(monkeyView.transform.position);
                 projectile.SetTarget(targetBloon);
+                GameService.Instance.SoundService.PlaySoundEffects(Sound.SoundType.MonkeyShoot);
                 ResetAttackTimer();
             }
         }
