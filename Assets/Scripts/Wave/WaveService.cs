@@ -16,10 +16,10 @@ namespace ServiceLocator.Wave
         private int currentWaveId;
         private List<BloonController> activeBloons;
 
-        public WaveService(WaveScriptableObject waveScriptableObject)
+        public WaveService(WaveScriptableObject waveScriptableObject, Transform bloonContainer)
         {
             this.waveScriptableObject = waveScriptableObject;
-            bloonPool = new BloonPool(waveScriptableObject.BloonTypeDataMap.BloonPrefab, waveScriptableObject.BloonTypeDataMap.BloonScriptableObjects);
+            bloonPool = new BloonPool(waveScriptableObject.BloonTypeDataMap.BloonPrefab, waveScriptableObject.BloonTypeDataMap.BloonScriptableObjects, bloonContainer);
             activeBloons = new List<BloonController>();
         }
 

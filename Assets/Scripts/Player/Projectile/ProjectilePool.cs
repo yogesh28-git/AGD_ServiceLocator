@@ -8,11 +8,13 @@ namespace ServiceLocator.Player.Projectile
     {
         private ProjectileView projectilePrefab;
         private List<ProjectileScriptableObject> projectileScriptableObjects;
+        private Transform projectileContainer;
 
-        public ProjectilePool(ProjectileView projectilePrefab, List<ProjectileScriptableObject> projectileScriptableObjects)
+        public ProjectilePool(ProjectileView projectilePrefab, List<ProjectileScriptableObject> projectileScriptableObjects, Transform projectileContainer)
         {
             this.projectilePrefab = projectilePrefab;
             this.projectileScriptableObjects = projectileScriptableObjects;
+            this.projectileContainer = projectileContainer;
         }
 
         public ProjectileController GetProjectile(ProjectileType projectileType)
@@ -23,6 +25,6 @@ namespace ServiceLocator.Player.Projectile
             return projectile;
         }
 
-        protected override ProjectileController CreateItem() => new ProjectileController(projectilePrefab);
+        protected override ProjectileController CreateItem() => new ProjectileController(projectilePrefab, projectileContainer);
     }
 }

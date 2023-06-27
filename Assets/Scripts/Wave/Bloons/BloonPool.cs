@@ -9,11 +9,13 @@ namespace ServiceLocator.Bloon
     {
         private BloonView bloonPrefab;
         private List<BloonScriptableObject> bloonScriptableObjects;
+        private Transform bloonContainer;
 
-        public BloonPool(BloonView bloonPrefab, List<BloonScriptableObject> bloonScriptableObjects)
+        public BloonPool(BloonView bloonPrefab, List<BloonScriptableObject> bloonScriptableObjects, Transform bloonContainer)
         {
             this.bloonPrefab = bloonPrefab;
             this.bloonScriptableObjects = bloonScriptableObjects;
+            this.bloonContainer = bloonContainer;
         }
 
         public BloonController GetBloon(BloonType bloonType)
@@ -24,6 +26,6 @@ namespace ServiceLocator.Bloon
             return bloon;
         }
 
-        protected override BloonController CreateItem() => new BloonController(bloonPrefab);
+        protected override BloonController CreateItem() => new BloonController(bloonPrefab, bloonContainer);
     }
 }

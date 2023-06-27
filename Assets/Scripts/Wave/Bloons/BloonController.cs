@@ -16,9 +16,9 @@ namespace ServiceLocator.Bloon
 
         public Vector3 Position => bloonView.transform.position;
 
-        public BloonController(BloonView bloonPrefab)
+        public BloonController(BloonView bloonPrefab, Transform bloonContainer)
         {
-            bloonView = Object.Instantiate(bloonPrefab);
+            bloonView = Object.Instantiate(bloonPrefab, bloonContainer);
             bloonView.Controller = this;
             waypoints = new List<Vector3>();
         }

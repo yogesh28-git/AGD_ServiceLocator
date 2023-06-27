@@ -14,10 +14,10 @@ namespace ServiceLocator.Player
         private int health;
         private int money;
 
-        public PlayerService(PlayerScriptableObject playerScriptableObject)
+        public PlayerService(PlayerScriptableObject playerScriptableObject, Transform projectileContainer)
         {
             this.playerScriptableObject = playerScriptableObject;
-            projectilePool = new ProjectilePool(playerScriptableObject.ProjectilePrefab, playerScriptableObject.ProjectileScriptableObjects);
+            projectilePool = new ProjectilePool(playerScriptableObject.ProjectilePrefab, playerScriptableObject.ProjectileScriptableObjects, projectileContainer);
             InitializeVariables();
         }
 

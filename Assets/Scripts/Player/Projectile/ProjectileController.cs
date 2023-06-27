@@ -13,9 +13,9 @@ namespace ServiceLocator.Player.Projectile
 
         private BloonController target;
 
-        public ProjectileController(ProjectileView projectilePrefab)
+        public ProjectileController(ProjectileView projectilePrefab, Transform projectileContainer)
         {
-            projectileView = Object.Instantiate(projectilePrefab);
+            projectileView = Object.Instantiate(projectilePrefab, projectileContainer);
             projectileView.SetController(this);
         }
 
