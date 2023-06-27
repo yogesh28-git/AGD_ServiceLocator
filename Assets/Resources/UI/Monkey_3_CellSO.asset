@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Type: 2
   Name: Sniper Monkey
-  Sprite: {fileID: 21300000, guid: 7231a2bdefea0c44d9406a84d33913a3, type: 3}
+  Sprite: {fileID: 21300000, guid: d06554cafdb851448bb243a72c69127e, type: 3}
   Cost: 300
