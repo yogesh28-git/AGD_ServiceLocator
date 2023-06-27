@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MapDataByLevels:
   - MapID: 1
-    MapPrefab: {fileID: 7441656525615922827, guid: 82818e93c5e1c014882708bd06ff2d67, type: 3}
+    MapPrefab: {fileID: 7584734214643050015, guid: 535d681747b4f184d8126e1ec6614d1d, type: 3}
     SpawningPoint: {x: -7.5, y: -6, z: 0}
     WayPoints:
     - {x: -7.5, y: 3.5, z: 0}

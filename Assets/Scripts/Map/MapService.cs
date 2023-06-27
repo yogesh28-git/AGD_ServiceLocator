@@ -9,7 +9,8 @@ namespace ServiceLocator.Map
     {
         private MapScriptableObject mapScriptableObject;
 
-        private Grid currentMap;
+        private Grid currentGrid;
+        private Tilemap currentTileMap;
         private MapData currentMapData;
 
         public MapService(MapScriptableObject mapScriptableObject) => this.mapScriptableObject = mapScriptableObject;
@@ -17,7 +18,8 @@ namespace ServiceLocator.Map
         public void LoadMap(int mapId)
         {
             currentMapData = mapScriptableObject.MapDataByLevels.Find(mapData => mapData.MapID == mapId);
-            currentMap = Object.Instantiate(currentMapData.MapPrefab);
+            currentGrid = Object.Instantiate(currentMapData.MapPrefab);
+            currentTileMap = currentGrid.GetComponentInChildren<Tilemap>();
         }
 
         public List<Vector3> GetWayPointsForCurrentMap() => currentMapData.WayPoints;
@@ -27,10 +29,10 @@ namespace ServiceLocator.Map
         public bool TryGetSpawnPosition(Vector3 cursorPosition, out Vector3 spawnPosition)
         {
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(cursorPosition);
-            Vector3Int mouseToCell = currentMap.WorldToCell(new Vector3(mousePosition.x, mousePosition.y, 0));
-            Vector3 centerCell = currentMap.GetCellCenterWorld(mouseToCell);
+            Vector3Int mouseToCell = currentGrid.WorldToCell(new Vector3(mousePosition.x, mousePosition.y, 0));
+            Vector3 centerCell = currentGrid.GetCellCenterWorld(mouseToCell);
 
-            if (CanSpawnOnPosition(centerCell))
+            if (CanSpawnOnPosition(centerCell, mouseToCell))
             {
                 spawnPosition = centerCell;
                 return true;
@@ -42,20 +44,26 @@ namespace ServiceLocator.Map
             }
         }
 
-        private bool CanSpawnOnPosition(Vector3 cellPosition)
+        private bool CanSpawnOnPosition(Vector3 centerCell, Vector3Int cellPosition)
         {
-            Collider2D[] colliders = Physics2D.OverlapCircleAll(cellPosition, 0.1f);
-            return HasClickedOnTileMap(colliders) && !IsOverLappingMonkey(colliders);
+            Collider2D[] colliders = Physics2D.OverlapCircleAll(centerCell, 0.1f);
+            return InisdeTilemapBounds(cellPosition) && HasClickedOnEmptyTile(colliders) && !IsOverLappingMonkey(colliders);
         }
 
-        private bool HasClickedOnTileMap(Collider2D[] colliders)
+        private bool InisdeTilemapBounds(Vector3Int mouseToCell)
         {
-            foreach(Collider2D collider in colliders)
+            BoundsInt tilemapBounds = currentTileMap.cellBounds;
+            return tilemapBounds.Contains(mouseToCell);
+        }
+
+        private bool HasClickedOnEmptyTile(Collider2D[] colliders)
+        {
+            foreach (Collider2D collider in colliders)
             {
                 if (collider.GetComponent<TilemapCollider2D>() != null)
-                    return true;
+                    return false;
             }
-            return false;
+            return true;
         }
 
         private bool IsOverLappingMonkey(Collider2D[] colliders)
