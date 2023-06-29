@@ -11,6 +11,7 @@ namespace ServiceLocator.Player
         private ProjectilePool projectilePool;
 
         private List<MonkeyController> activeMonkeys;
+        private MonkeyView selectedMonkeyView;
         private int health;
         private int money;
 
@@ -35,6 +36,28 @@ namespace ServiceLocator.Player
             foreach(MonkeyController monkey in activeMonkeys)
             {
                 monkey?.UpdateMonkey();
+            }
+
+            if(Input.GetMouseButtonDown(0))
+            {
+                UpdateSelectedMonkey();
+            }
+        }
+
+        private void UpdateSelectedMonkey()
+        {
+            Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero);
+
+            if (hit.collider!= null && hit.collider.GetComponent<MonkeyView>() != null)
+            {
+                selectedMonkeyView?.MakeRangeVisible(false);
+                selectedMonkeyView = hit.collider.GetComponent<MonkeyView>();
+                selectedMonkeyView.MakeRangeVisible(true);
+            }
+            else
+            {
+                selectedMonkeyView?.MakeRangeVisible(false);
             }
         }
 

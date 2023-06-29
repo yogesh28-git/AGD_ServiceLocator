@@ -22,6 +22,7 @@ namespace ServiceLocator.Player
         {
             rangeTriggerCollider.radius = radiusToSet;
             rangeSpriteRenderer.transform.localScale = new Vector3(radiusToSet, radiusToSet, 1);
+            MakeRangeVisible(false);
         }
 
         public void PlayAnimation(MonkeyAnimation animationToPlay) => monkeyAnimator.Play(animationToPlay.ToString(), 0);
@@ -37,6 +38,8 @@ namespace ServiceLocator.Player
             if (collision.GetComponent<BloonView>() != null)
                 controller.BloonExitedRange(collision.GetComponent<BloonView>().Controller);
         }
+
+        public void MakeRangeVisible(bool makeVisible) => rangeSpriteRenderer.color = makeVisible ? new Color(1, 1, 1, 0.25f) : new Color(1, 1, 1, 0);
     }
 
     public enum MonkeyAnimation
