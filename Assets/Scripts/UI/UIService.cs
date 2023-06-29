@@ -11,6 +11,8 @@ namespace ServiceLocator.UI
         [SerializeField] private GameObject GameplayPanel;
         [SerializeField] private TextMeshProUGUI healthText;
         [SerializeField] private TextMeshProUGUI moneyText;
+
+        [SerializeField] private TextMeshProUGUI waveProgressText;
         [SerializeField] private Button nextWaveButton;
 
         [SerializeField] private GameObject LevelSelectionPanel;
@@ -54,6 +56,8 @@ namespace ServiceLocator.UI
         public void UpdateHealthUI(int healthToDisplay) => healthText.SetText(healthToDisplay.ToString());
 
         public void UpdateMoneyUI(int moneyToDisplay) => moneyText.SetText(moneyToDisplay.ToString());
+
+        public void UpdateWaveProgressUI(int waveCompleted, int totalWaves) => waveProgressText.SetText(waveCompleted.ToString() + "/" + totalWaves.ToString());
 
     }
 }

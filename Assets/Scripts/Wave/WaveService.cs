@@ -31,6 +31,7 @@ namespace ServiceLocator.Wave
             currentMapID = mapId;
             waveDatas = waveScriptableObject.WaveConfigurations.Find(config => config.MapID == mapId).WaveDatas;
             currentWaveId = 0;
+            GameService.Instance.UIService.UpdateWaveProgressUI(currentWaveId, waveDatas.Count);
         }
 
         public void StarNextWave()
@@ -56,6 +57,7 @@ namespace ServiceLocator.Wave
             if (HasCurrentWaveEnded())
             {
                 GameService.Instance.SoundService.PlaySoundEffects(Sound.SoundType.WaveComplete);
+                GameService.Instance.UIService.UpdateWaveProgressUI(currentWaveId, waveDatas.Count);
                 if(IsLevelWon())
                 {
                     // TODO:
