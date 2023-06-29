@@ -16,6 +16,9 @@ namespace ServiceLocator.Wave
         private int currentWaveId;
         private List<BloonController> activeBloons;
 
+        public int CurrentWaveId => currentWaveId;
+        public List<WaveData> WaveDatas { get { return waveDatas; } set { waveDatas = value; } }
+
         public WaveService(WaveScriptableObject waveScriptableObject, Transform bloonContainer)
         {
             this.waveScriptableObject = waveScriptableObject;
