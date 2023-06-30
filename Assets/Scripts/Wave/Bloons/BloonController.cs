@@ -13,8 +13,10 @@ namespace ServiceLocator.Bloon
         private List<Vector3> waypoints;
         private int currentHealth;
         private int currentWaypointIndex;
+        private BloonState currentState;
 
         public Vector3 Position => bloonView.transform.position;
+        public BloonView View => bloonView;
 
         public BloonController(BloonView bloonPrefab, Transform bloonContainer)
         {
@@ -28,21 +30,25 @@ namespace ServiceLocator.Bloon
             this.bloonScriptableObject = bloonScriptableObject;
             currentHealth = bloonScriptableObject.Health;
             bloonView.SetRenderer(bloonScriptableObject.Sprite);
-            bloonView.gameObject.SetActive(true);
-            SetWayPoints();
+            currentState = BloonState.ACTIVE;
         }
 
-        public void SetWayPoints()
+        public void SetPosition(Vector3 spawnPosition)
         {
-            bloonView.transform.position = GameService.Instance.MapService.GetBloonSpawnPositionForCurrentMap();
-            waypoints = GameService.Instance.MapService.GetWayPointsForCurrentMap();
-            currentWaypointIndex = 0;
+            bloonView.transform.position = spawnPosition;
+            bloonView.gameObject.SetActive(true);
+        }
+
+        public void SetWayPoints(List<Vector3> waypointsToSet, int startingWaypointIndex)
+        {
+            waypoints = waypointsToSet;
+            currentWaypointIndex = startingWaypointIndex;
         }
 
         public void TakeDamage(int damageToTake)
         {
             currentHealth = currentHealth - damageToTake <= 0 ? 0 : currentHealth -= damageToTake;
-            if(currentHealth <= 0)
+            if(currentHealth <= 0 && currentState == BloonState.ACTIVE)
             {
                 PopBloon();
                 GameService.Instance.SoundService.PlaySoundEffects(Sound.SoundType.BloonPop);
@@ -73,12 +79,25 @@ namespace ServiceLocator.Bloon
 
         private void PopBloon()
         {
+            currentState = BloonState.POPPED;
             bloonView.PopBloon();
-            GameService.Instance.PlayerService.GetReward(bloonScriptableObject.Reward);
         }
 
-        public void OnPopAnimationPlayed() => GameService.Instance.WaveService.RemoveBloon(this);
+        public void OnPopAnimationPlayed()
+        {
+            if (bloonScriptableObject.LayeredBloons.Count > 0)
+                GameService.Instance.WaveService.SpawnBloons(bloonScriptableObject.LayeredBloons, bloonView.transform.position, currentWaypointIndex);
+
+            GameService.Instance.PlayerService.GetReward(bloonScriptableObject.Reward);
+            GameService.Instance.WaveService.RemoveBloon(this);
+        }
 
         public BloonType GetBloonType() => bloonScriptableObject.Type;
+    }
+
+    public enum BloonState
+    {
+        ACTIVE,
+        POPPED
     }
 }

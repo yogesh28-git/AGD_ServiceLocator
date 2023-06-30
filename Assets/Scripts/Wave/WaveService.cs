@@ -37,14 +37,19 @@ namespace ServiceLocator.Wave
         public void StarNextWave()
         {
             currentWaveId++;
-            SpawnBloons(waveDatas.Find(waveData => waveData.WaveID == currentWaveId));
+            var bloonsToSpawn = waveDatas.Find(waveData => waveData.WaveID == currentWaveId).ListOfBloons;
+            var spawnPosition = GameService.Instance.MapService.GetBloonSpawnPositionForCurrentMap();
+            SpawnBloons(bloonsToSpawn, spawnPosition, 0);
         }
 
-        private async void SpawnBloons(WaveData waveData)
+        public async void SpawnBloons(List<BloonType> bloonsToSpawn, Vector3 spawnPosition, int startingWaypointIndex)
         {
-            foreach(BloonType bloonType in waveData.ListOfBloons)
+            foreach(BloonType bloonType in bloonsToSpawn)
             {
                 BloonController bloon = bloonPool.GetBloon(bloonType);
+                bloon.SetPosition(spawnPosition);
+                bloon.SetWayPoints(GameService.Instance.MapService.GetWayPointsForCurrentMap(), startingWaypointIndex);
+                
                 activeBloons.Add(bloon);
                 await Task.Delay(Mathf.RoundToInt(waveScriptableObject.SpawnRate * 1000));
             }

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using ServiceLocator.Player.Projectile;
 using ServiceLocator.Main;
+using ServiceLocator.Bloon;
 
 namespace ServiceLocator.Player
 {
@@ -47,19 +48,23 @@ namespace ServiceLocator.Player
         private void UpdateSelectedMonkey()
         {
             Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero);
+            RaycastHit2D[] hits = Physics2D.RaycastAll(mousePosition, Vector2.zero);
 
-            if (hit.collider!= null && hit.collider.GetComponent<MonkeyView>() != null)
+            foreach(RaycastHit2D hit in hits)
             {
-                selectedMonkeyView?.MakeRangeVisible(false);
-                selectedMonkeyView = hit.collider.GetComponent<MonkeyView>();
-                selectedMonkeyView.MakeRangeVisible(true);
+                if(IsMonkeyCollider(hit.collider))
+                {
+                    selectedMonkeyView?.MakeRangeVisible(false);
+                    selectedMonkeyView = hit.collider.GetComponent<MonkeyView>();
+                    selectedMonkeyView.MakeRangeVisible(true);
+                    return;
+                }
             }
-            else
-            {
-                selectedMonkeyView?.MakeRangeVisible(false);
-            }
+
+            selectedMonkeyView?.MakeRangeVisible(false);
         }
+
+        private bool IsMonkeyCollider(Collider2D collider) => collider != null && !collider.isTrigger && collider.GetComponent<MonkeyView>() != null;
 
         public void TrySpawningMonkey(MonkeyType monkeyType, int monkeyCost, Vector3 dropPosition)
         {

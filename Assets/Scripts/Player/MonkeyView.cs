@@ -40,6 +40,12 @@ namespace ServiceLocator.Player
         }
 
         public void MakeRangeVisible(bool makeVisible) => rangeSpriteRenderer.color = makeVisible ? new Color(1, 1, 1, 0.25f) : new Color(1, 1, 1, 0);
+
+        public bool IsInRange(Vector2 poistionToCheck)
+        {
+            float distance = Vector2.Distance(rangeTriggerCollider.bounds.center, poistionToCheck);
+            return distance < rangeTriggerCollider.bounds.extents.x;
+        }
     }
 
     public enum MonkeyAnimation

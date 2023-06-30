@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace ServiceLocator.Bloon
@@ -11,5 +12,6 @@ namespace ServiceLocator.Bloon
         public int Reward;
         public float Speed;
         public Sprite Sprite;
+        public List<BloonType> LayeredBloons;
     }
 }
