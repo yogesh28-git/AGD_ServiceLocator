@@ -8,7 +8,7 @@ namespace ServiceLocator.Player
         private MonkeyController controller;
         private CircleCollider2D rangeTriggerCollider;
         private Animator monkeyAnimator;
-        [SerializeField] private SpriteRenderer rangeSpriteRenderer;
+        [SerializeField] public SpriteRenderer RangeSpriteRenderer;
 
         private void Awake()
         {
@@ -20,8 +20,10 @@ namespace ServiceLocator.Player
 
         public void SetTriggerRadius(float radiusToSet)
         {
-            rangeTriggerCollider.radius = radiusToSet;
-            rangeSpriteRenderer.transform.localScale = new Vector3(radiusToSet, radiusToSet, 1);
+            if(rangeTriggerCollider != null)
+                rangeTriggerCollider.radius = radiusToSet;
+
+            RangeSpriteRenderer.transform.localScale = new Vector3(radiusToSet, radiusToSet, 1);
             MakeRangeVisible(false);
         }
 
@@ -39,7 +41,7 @@ namespace ServiceLocator.Player
                 controller.BloonExitedRange(collision.GetComponent<BloonView>().Controller);
         }
 
-        public void MakeRangeVisible(bool makeVisible) => rangeSpriteRenderer.color = makeVisible ? new Color(1, 1, 1, 0.25f) : new Color(1, 1, 1, 0);
+        public void MakeRangeVisible(bool makeVisible) => RangeSpriteRenderer.color = makeVisible ? new Color(1, 1, 1, 0.25f) : new Color(1, 1, 1, 0);
 
         public bool IsInRange(Vector2 poistionToCheck)
         {

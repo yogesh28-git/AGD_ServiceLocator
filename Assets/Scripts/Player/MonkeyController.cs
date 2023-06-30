@@ -41,7 +41,7 @@ namespace ServiceLocator.Player
                 bloonsInRange.Remove(bloon);
         }
 
-        private bool CanAttackBloon(BloonType bloonType) => monkeyScriptableObject.AttackableBloons.Contains(bloonType);
+        public bool CanAttackBloon(BloonType bloonType) => monkeyScriptableObject.AttackableBloons.Contains(bloonType);
 
         public void UpdateMonkey()
         {

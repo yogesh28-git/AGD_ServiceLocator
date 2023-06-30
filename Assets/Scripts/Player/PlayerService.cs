@@ -15,6 +15,8 @@ namespace ServiceLocator.Player
         private MonkeyView selectedMonkeyView;
         private int health;
         private int money;
+        public int Money => money;
+
 
         public PlayerService(PlayerScriptableObject playerScriptableObject, Transform projectileContainer)
         {
