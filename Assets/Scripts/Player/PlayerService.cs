@@ -110,8 +110,7 @@ namespace ServiceLocator.Player
 
         private void PlayerDeath()
         {
-            // Game Over UI.
-            // Stop Bloon Spawning.
+            GameService.Instance.UIService.UpdateGameEndUI(false);
         }
     }
 }

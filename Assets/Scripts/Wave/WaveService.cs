@@ -65,9 +65,7 @@ namespace ServiceLocator.Wave
                 GameService.Instance.UIService.UpdateWaveProgressUI(currentWaveId, waveDatas.Count);
                 if(IsLevelWon())
                 {
-                    // TODO:
-                    // Level Won.
-                    Debug.Log("Level Won");
+                    GameService.Instance.UIService.UpdateGameEndUI(true);
                 }
                 else
                     GameService.Instance.UIService.SetNextWaveButton(true);

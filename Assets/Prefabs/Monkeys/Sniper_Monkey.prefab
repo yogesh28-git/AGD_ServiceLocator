@@ -123,7 +123,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9b56bd8ba1ccb3438c0ae1abac9bd07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rangeSpriteRenderer: {fileID: 5937757497366922816}
+  RangeSpriteRenderer: {fileID: 5937757497366922816}
 --- !u!61 &-3514233824987181250
 BoxCollider2D:
   m_ObjectHideFlags: 0
