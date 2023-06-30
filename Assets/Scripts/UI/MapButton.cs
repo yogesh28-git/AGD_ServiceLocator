@@ -10,11 +10,6 @@ namespace ServiceLocator.UI
 
         private void Start() => GetComponent<Button>().onClick.AddListener(OnMapButtonClicked);
 
-        private void OnMapButtonClicked()
-        {
-            GameService.Instance.MapService.LoadMap(MapId);
-            GameService.Instance.WaveService.LoadWaveDataForMap(MapId);
-            GameService.Instance.UIService.OnMapSelected();
-        }
+        private void OnMapButtonClicked() =>  GameService.Instance.EventService.OnMapSelected.InvokeEvent(MapId);
     }
 }

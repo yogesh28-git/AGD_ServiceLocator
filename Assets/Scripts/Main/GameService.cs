@@ -5,26 +5,21 @@ using ServiceLocator.Wave;
 using ServiceLocator.Sound;
 using ServiceLocator.Player;
 using ServiceLocator.UI;
+using ServiceLocator.Events;
 
 namespace ServiceLocator.Main
 {
     public class GameService : GenericMonoSingleton<GameService>
     {
         // Services:
-        private MapService mapService;
-        public MapService MapService => mapService;
-
-        private WaveService waveService;
-        public WaveService WaveService => waveService;
+        public MapService MapService { get; private set; }
+        public WaveService WaveService { get; private set; }
+        public SoundService SoundService { get; private set; }
+        public PlayerService PlayerService { get; private set; }
+        public EventService EventService { get; private set; }
 
         [SerializeField] private UIService uiService;
-        public UIService UIService => uiService;
-
-        private SoundService soundService;
-        public SoundService SoundService => soundService;
-
-        private PlayerService playerService;
-        public PlayerService PlayerService => playerService;
+        public UIService UIService;
 
 
         // Scriptable Objects:
@@ -41,15 +36,17 @@ namespace ServiceLocator.Main
 
         private void Start()
         {
-            mapService = new MapService(mapScriptableObject);
-            waveService = new WaveService(waveScriptableObject, BloonContainer);
-            soundService = new SoundService(soundScriptableObject, SFXSource, BGSource);
-            playerService = new PlayerService(playerScriptableObject, ProjectileContainer);
+            EventService = new EventService();
+            UIService.Init();
+            MapService = new MapService(mapScriptableObject);
+            WaveService = new WaveService(waveScriptableObject, BloonContainer);
+            SoundService = new SoundService(soundScriptableObject, SFXSource, BGSource);
+            PlayerService = new PlayerService(playerScriptableObject, ProjectileContainer);
         }
 
         private void Update()
         {
-            playerService.Update();
+            PlayerService.Update();
         }
     } 
 }

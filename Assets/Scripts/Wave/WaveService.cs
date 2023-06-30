@@ -24,6 +24,7 @@ namespace ServiceLocator.Wave
             this.waveScriptableObject = waveScriptableObject;
             bloonPool = new BloonPool(waveScriptableObject.BloonTypeDataMap.BloonPrefab, waveScriptableObject.BloonTypeDataMap.BloonScriptableObjects, bloonContainer);
             activeBloons = new List<BloonController>();
+            GameService.Instance.EventService.OnMapSelected.AddListener(LoadWaveDataForMap);
         }
 
         public void LoadWaveDataForMap(int mapId)

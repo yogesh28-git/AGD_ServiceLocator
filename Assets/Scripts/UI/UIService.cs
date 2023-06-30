@@ -14,6 +14,7 @@ namespace ServiceLocator.UI
         [SerializeField] private TextMeshProUGUI healthText;
         [SerializeField] private TextMeshProUGUI moneyText;
         [SerializeField] private TextMeshProUGUI waveProgressText;
+        [SerializeField] private TextMeshProUGUI currentMapText;
         [SerializeField] private Button nextWaveButton;
 
         [Header("Level Selection Panel")]
@@ -49,12 +50,15 @@ namespace ServiceLocator.UI
             playAgainButton.onClick.AddListener(OnPlayAgainButtonClicked);
         }
 
-        public void OnMapSelected()
+        public void Init() => GameService.Instance.EventService.OnMapSelected.AddListener(OnMapSelected);
+
+        public void OnMapSelected(int mapID)
         {
             levelSelectionPanel.SetActive(false);
             gameplayPanel.SetActive(true);
             MonkeySelectionPanel.SetActive(true);
             monkeySelectionController.SetActive(true);
+            currentMapText.SetText("Map: " + mapID);
         }
 
         private void OnNextWaveButton()

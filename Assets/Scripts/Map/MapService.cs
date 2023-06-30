@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using ServiceLocator.Main;
 using ServiceLocator.Player;
 
 namespace ServiceLocator.Map
@@ -13,7 +14,11 @@ namespace ServiceLocator.Map
         private Tilemap currentTileMap;
         private MapData currentMapData;
 
-        public MapService(MapScriptableObject mapScriptableObject) => this.mapScriptableObject = mapScriptableObject;
+        public MapService(MapScriptableObject mapScriptableObject)
+        {
+            this.mapScriptableObject = mapScriptableObject;
+            GameService.Instance.EventService.OnMapSelected.AddListener(LoadMap);
+        }
 
         public void LoadMap(int mapId)
         {
