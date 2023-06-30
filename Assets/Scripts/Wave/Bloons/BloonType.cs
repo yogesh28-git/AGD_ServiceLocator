@@ -1,4 +1,4 @@
-namespace ServiceLocator.Bloon
+namespace ServiceLocator.Wave.Bloon
 {
     public enum BloonType
     {

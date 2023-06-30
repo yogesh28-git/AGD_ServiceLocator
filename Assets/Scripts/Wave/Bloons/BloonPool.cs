@@ -1,9 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using ServiceLocator.Utilities;
 
-namespace ServiceLocator.Bloon
+namespace ServiceLocator.Wave.Bloon
 {
     public class BloonPool : GenericObjectPool<BloonController>
     {

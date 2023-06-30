@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using ServiceLocator.Player.Projectile;
 using ServiceLocator.Main;
-using ServiceLocator.Bloon;
 
 namespace ServiceLocator.Player
 {

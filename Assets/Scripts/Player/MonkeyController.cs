@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
-using ServiceLocator.Bloon;
+using ServiceLocator.Wave.Bloon;
 using ServiceLocator.Player.Projectile;
 using ServiceLocator.Main;
 

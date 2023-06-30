@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using ServiceLocator.Bloon;
+using ServiceLocator.Wave.Bloon;
 
 namespace ServiceLocator.Wave
 {

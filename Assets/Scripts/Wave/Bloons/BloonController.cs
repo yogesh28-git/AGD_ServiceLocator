@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using ServiceLocator.Main;
 
-namespace ServiceLocator.Bloon
+namespace ServiceLocator.Wave.Bloon
 {
     public class BloonController
     {

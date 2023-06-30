@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using ServiceLocator.Player;
 using ServiceLocator.Player.Projectile;
-using ServiceLocator.Bloon;
+using ServiceLocator.Wave.Bloon;
 
 public class MonkeyController_UnitTest
 {

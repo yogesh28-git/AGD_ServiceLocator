@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace ServiceLocator.Bloon
+namespace ServiceLocator.Wave.Bloon
 {
     public class BloonView : MonoBehaviour
     {

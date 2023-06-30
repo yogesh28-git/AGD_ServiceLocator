@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ServiceLocator.Bloon
+namespace ServiceLocator.Wave.Bloon
 {
     [CreateAssetMenu(fileName = "BloonScriptableObject", menuName = "ScriptableObjects/BloonScriptableObject")]
     public class BloonScriptableObject : ScriptableObject

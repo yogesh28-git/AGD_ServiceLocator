@@ -1,9 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using ServiceLocator.Bloon;
 
-namespace ServiceLocator.Bloon
+namespace ServiceLocator.Wave.Bloon
 {
     [CreateAssetMenu(fileName = "BloonTypePrefabMap", menuName = "ScriptableObjects/BloonTypePrefabMap")]
     public class BloonTypeDataMap : ScriptableObject
@@ -11,11 +9,4 @@ namespace ServiceLocator.Bloon
         public BloonView BloonPrefab;
         public List<BloonScriptableObject> BloonScriptableObjects;
     }
-
-/*    [System.Serializable]
-    public struct BloonConfiguration
-    {
-        public BloonType BloonType;
-        public BloonScriptableObject BloonScriptableObject;
-    }*/
 }

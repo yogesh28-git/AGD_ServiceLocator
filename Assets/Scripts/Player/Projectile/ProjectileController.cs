@@ -1,7 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using ServiceLocator.Bloon;
+using ServiceLocator.Wave.Bloon;
 using ServiceLocator.Main;
 
 namespace ServiceLocator.Player.Projectile
