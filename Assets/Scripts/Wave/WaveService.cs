@@ -11,7 +11,6 @@ namespace ServiceLocator.Wave
         private WaveScriptableObject waveScriptableObject;
         private BloonPool bloonPool;
 
-        private int currentMapID;
         private List<WaveData> waveDatas;
         private int currentWaveId;
         private List<BloonController> activeBloons;
@@ -29,7 +28,6 @@ namespace ServiceLocator.Wave
 
         public void LoadWaveDataForMap(int mapId)
         {
-            currentMapID = mapId;
             waveDatas = waveScriptableObject.WaveConfigurations.Find(config => config.MapID == mapId).WaveDatas;
             currentWaveId = 0;
             GameService.Instance.UIService.UpdateWaveProgressUI(currentWaveId, waveDatas.Count);
