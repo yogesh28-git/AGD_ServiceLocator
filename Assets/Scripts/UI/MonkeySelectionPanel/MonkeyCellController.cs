@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using ServiceLocator.Player;
-using ServiceLocator.Main;
 
 namespace ServiceLocator.UI
 {
@@ -21,7 +20,7 @@ namespace ServiceLocator.UI
 
         public void MonkeyDroppedAt(Vector3 dropPosition)
         {
-            GameService.Instance.PlayerService.TrySpawningMonkey(monkeyCellSO.Type, monkeyCellSO.Cost, dropPosition);
+            PlayerService.Instance.TrySpawningMonkey(monkeyCellSO.Type, monkeyCellSO.Cost, dropPosition);
         }
     }
 }

@@ -1,31 +1,31 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using ServiceLocator.Main;
+using ServiceLocator.Utilities;
 using ServiceLocator.Player;
+using ServiceLocator.Events;
 
 namespace ServiceLocator.Map
 {
-    public class MapService
+    public class MapService : GenericMonoSingleton<MapService>
     {
-        private MapScriptableObject mapScriptableObject;
+        [SerializeField] private MapScriptableObject mapScriptableObject;
 
         private Grid currentGrid;
         private Tilemap currentTileMap;
         private MapData currentMapData;
 
-        public MapService(MapScriptableObject mapScriptableObject)
+        private void Start()
         {
-            this.mapScriptableObject = mapScriptableObject;
             SubscribeToEvents();
         }
 
-        private void SubscribeToEvents() => GameService.Instance.EventService.OnMapSelected.AddListener(LoadMap);
+        private void SubscribeToEvents() => EventService.Instance.OnMapSelected.AddListener(LoadMap);
 
         private void LoadMap(int mapId)
         {
             currentMapData = mapScriptableObject.MapDatas.Find(mapData => mapData.MapID == mapId);
-            currentGrid = Object.Instantiate(currentMapData.MapPrefab);
+            currentGrid = Instantiate(currentMapData.MapPrefab);
             currentTileMap = currentGrid.GetComponentInChildren<Tilemap>();
         }
 

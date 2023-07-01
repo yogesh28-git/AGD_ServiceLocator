@@ -1,6 +1,5 @@
 using UnityEngine;
 using ServiceLocator.Wave.Bloon;
-using ServiceLocator.Main;
 
 namespace ServiceLocator.Player.Projectile
 {
@@ -55,7 +54,7 @@ namespace ServiceLocator.Player.Projectile
         public void ResetProjectile()
         {
             projectileView.gameObject.SetActive(false);
-            GameService.Instance.PlayerService.ReturnProjectileToPool(this);
+            PlayerService.Instance.ReturnProjectileToPool(this);
         }
     }
 }

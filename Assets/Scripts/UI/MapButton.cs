@@ -1,6 +1,6 @@
+using ServiceLocator.Events;
 using UnityEngine;
 using UnityEngine.UI;
-using ServiceLocator.Main;
 
 namespace ServiceLocator.UI
 {
@@ -10,6 +10,6 @@ namespace ServiceLocator.UI
 
         private void Start() => GetComponent<Button>().onClick.AddListener(OnMapButtonClicked);
 
-        private void OnMapButtonClicked() =>  GameService.Instance.EventService.OnMapSelected.InvokeEvent(MapId);
+        private void OnMapButtonClicked() =>  EventService.Instance.OnMapSelected.InvokeEvent(MapId);
     }
 }

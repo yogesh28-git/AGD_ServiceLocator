@@ -1,6 +1,7 @@
+using ServiceLocator.Player;
+using ServiceLocator.Sound;
 using System.Collections.Generic;
 using UnityEngine;
-using ServiceLocator.Main;
 
 namespace ServiceLocator.Wave.Bloon
 {
@@ -51,7 +52,7 @@ namespace ServiceLocator.Wave.Bloon
             if(currentHealth <= 0 && currentState == BloonState.ACTIVE)
             {
                 PopBloon();
-                GameService.Instance.SoundService.PlaySoundEffects(Sound.SoundType.BloonPop);
+                SoundService.Instance.PlaySoundEffects(Sound.SoundType.BloonPop);
             }
         }
 
@@ -72,8 +73,8 @@ namespace ServiceLocator.Wave.Bloon
 
         private void ReachedFinalWayPoint()
         {
-            GameService.Instance.WaveService.RemoveBloon(this);
-            GameService.Instance.PlayerService.TakeDamage(bloonScriptableObject.Damage);
+            WaveService.Instance.RemoveBloon(this);
+            PlayerService.Instance.TakeDamage(bloonScriptableObject.Damage);
             bloonView.gameObject.SetActive(false);
         }
 
@@ -86,10 +87,10 @@ namespace ServiceLocator.Wave.Bloon
         public void OnPopAnimationPlayed()
         {
             if (bloonScriptableObject.LayeredBloons.Count > 0)
-                GameService.Instance.WaveService.SpawnBloons(bloonScriptableObject.LayeredBloons, bloonView.transform.position, currentWaypointIndex);
+                WaveService.Instance.SpawnBloons(bloonScriptableObject.LayeredBloons, bloonView.transform.position, currentWaypointIndex);
 
-            GameService.Instance.PlayerService.GetReward(bloonScriptableObject.Reward);
-            GameService.Instance.WaveService.RemoveBloon(this);
+            PlayerService.Instance.GetReward(bloonScriptableObject.Reward);
+            WaveService.Instance.RemoveBloon(this);
         }
 
         public BloonType GetBloonType() => bloonScriptableObject.Type;

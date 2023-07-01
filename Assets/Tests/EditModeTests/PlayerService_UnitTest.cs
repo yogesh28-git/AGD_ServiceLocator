@@ -1,6 +1,5 @@
 using NUnit.Framework;
 using UnityEngine;
-using ServiceLocator.Main;
 using ServiceLocator.Player;
 using ServiceLocator.Player.Projectile;
 using System.Collections.Generic;
@@ -15,7 +14,9 @@ public class PlayerService_UnitTest
         PlayerScriptableObject playerSO = CreateDummyPlayerSO();
         Transform projectileContainer = new GameObject().transform;
 
-        playerService = new PlayerService(playerSO, projectileContainer);
+        playerService = new GameObject().AddComponent<PlayerService>();
+        playerService.playerScriptableObject = playerSO;
+        playerService.projectileContainer = projectileContainer;
     }
 
     private PlayerScriptableObject CreateDummyPlayerSO()
