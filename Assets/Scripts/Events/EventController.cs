@@ -1,8 +1,8 @@
 using System;
 
-/*  This part of the code demonstrates the Observer Pattern.
- *  If you're interested in learning about Observer Pattern, you can find
- *  a dedicated course on Outscal's website.
+/*  This script demonstrates implementation of the Observer Pattern.
+ *  If you're interested in learning about Observer Pattern, 
+ *  you can find a dedicated course on Outscal's website.
  *  Link: https://outscal.com/courses
  * */
 
