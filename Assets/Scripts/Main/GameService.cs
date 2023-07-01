@@ -1,22 +1,22 @@
 using UnityEngine;
 using ServiceLocator.Utilities;
+using ServiceLocator.Events;
 using ServiceLocator.Map;
 using ServiceLocator.Wave;
 using ServiceLocator.Sound;
 using ServiceLocator.Player;
 using ServiceLocator.UI;
-using ServiceLocator.Events;
 
 namespace ServiceLocator.Main
 {
     public class GameService : GenericMonoSingleton<GameService>
     {
         // Services:
+        public EventService EventService { get; private set; }
         public MapService MapService { get; private set; }
         public WaveService WaveService { get; private set; }
         public SoundService SoundService { get; private set; }
         public PlayerService PlayerService { get; private set; }
-        public EventService EventService { get; private set; }
 
         [SerializeField] private UIService uiService;
         public UIService UIService;
@@ -37,7 +37,7 @@ namespace ServiceLocator.Main
         private void Start()
         {
             EventService = new EventService();
-            UIService.Init();
+            UIService.SubscribeToEvents();
             MapService = new MapService(mapScriptableObject);
             WaveService = new WaveService(waveScriptableObject, BloonContainer);
             SoundService = new SoundService(soundScriptableObject, SFXSource, BGSource);
