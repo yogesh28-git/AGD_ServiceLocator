@@ -42,11 +42,11 @@ namespace ServiceLocator.Player
 
             if(Input.GetMouseButtonDown(0))
             {
-                UpdateSelectedMonkey();
+                UpdateSelectedMonkeyDisplay();
             }
         }
 
-        private void UpdateSelectedMonkey()
+        private void UpdateSelectedMonkeyDisplay()
         {
             Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             RaycastHit2D[] hits = Physics2D.RaycastAll(mousePosition, Vector2.zero);
@@ -108,9 +108,6 @@ namespace ServiceLocator.Player
             GameService.Instance.UIService.UpdateMoneyUI(money);
         }
 
-        private void PlayerDeath()
-        {
-            GameService.Instance.UIService.UpdateGameEndUI(false);
-        }
+        private void PlayerDeath() => GameService.Instance.UIService.UpdateGameEndUI(false);
     }
 }

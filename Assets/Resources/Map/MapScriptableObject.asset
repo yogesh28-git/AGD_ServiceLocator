@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecb5749d9397a4f42a705a1a7559f7b8, type: 3}
   m_Name: MapScriptableObject
   m_EditorClassIdentifier: 
-  MapDataByLevels:
+  MapDatas:
   - MapID: 1
     MapPrefab: {fileID: 7584734214643050015, guid: 535d681747b4f184d8126e1ec6614d1d, type: 3}
     SpawningPoint: {x: -7.5, y: -6, z: 0}

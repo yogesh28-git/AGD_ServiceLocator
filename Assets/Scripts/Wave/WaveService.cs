@@ -11,25 +11,24 @@ namespace ServiceLocator.Wave
         private WaveScriptableObject waveScriptableObject;
         private BloonPool bloonPool;
 
-        private List<WaveData> waveDatas;
         private int currentWaveId;
+        private List<WaveData> waveDatas;
         private List<BloonController> activeBloons;
-
-        public int CurrentWaveId => currentWaveId;
-        public List<WaveData> WaveDatas { get { return waveDatas; } set { waveDatas = value; } }
 
         public WaveService(WaveScriptableObject waveScriptableObject, Transform bloonContainer)
         {
             this.waveScriptableObject = waveScriptableObject;
             bloonPool = new BloonPool(waveScriptableObject.BloonTypeDataMap.BloonPrefab, waveScriptableObject.BloonTypeDataMap.BloonScriptableObjects, bloonContainer);
             activeBloons = new List<BloonController>();
-            GameService.Instance.EventService.OnMapSelected.AddListener(LoadWaveDataForMap);
+            SubscribeToEvents();
         }
 
-        public void LoadWaveDataForMap(int mapId)
+        private void SubscribeToEvents() => GameService.Instance.EventService.OnMapSelected.AddListener(LoadWaveDataForMap);
+
+        private void LoadWaveDataForMap(int mapId)
         {
-            waveDatas = waveScriptableObject.WaveConfigurations.Find(config => config.MapID == mapId).WaveDatas;
             currentWaveId = 0;
+            waveDatas = waveScriptableObject.WaveConfigurations.Find(config => config.MapID == mapId).WaveDatas;
             GameService.Instance.UIService.UpdateWaveProgressUI(currentWaveId, waveDatas.Count);
         }
 
@@ -62,16 +61,15 @@ namespace ServiceLocator.Wave
             {
                 GameService.Instance.SoundService.PlaySoundEffects(Sound.SoundType.WaveComplete);
                 GameService.Instance.UIService.UpdateWaveProgressUI(currentWaveId, waveDatas.Count);
+
                 if(IsLevelWon())
-                {
                     GameService.Instance.UIService.UpdateGameEndUI(true);
-                }
                 else
                     GameService.Instance.UIService.SetNextWaveButton(true);
             }
         }
 
-        public bool HasCurrentWaveEnded() => activeBloons.Count == 0;
+        private bool HasCurrentWaveEnded() => activeBloons.Count == 0;
 
         private bool IsLevelWon() => currentWaveId >= waveDatas.Count;
     }

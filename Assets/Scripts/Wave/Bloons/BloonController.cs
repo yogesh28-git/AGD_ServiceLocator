@@ -16,21 +16,21 @@ namespace ServiceLocator.Wave.Bloon
         private BloonState currentState;
 
         public Vector3 Position => bloonView.transform.position;
-        public BloonView View => bloonView;
 
         public BloonController(BloonView bloonPrefab, Transform bloonContainer)
         {
             bloonView = Object.Instantiate(bloonPrefab, bloonContainer);
             bloonView.Controller = this;
-            waypoints = new List<Vector3>();
         }
 
         public void Init(BloonScriptableObject bloonScriptableObject)
         {
             this.bloonScriptableObject = bloonScriptableObject;
-            currentHealth = bloonScriptableObject.Health;
             bloonView.SetRenderer(bloonScriptableObject.Sprite);
+            currentHealth = bloonScriptableObject.Health;
+            
             currentState = BloonState.ACTIVE;
+            waypoints = new List<Vector3>();
         }
 
         public void SetPosition(Vector3 spawnPosition)
