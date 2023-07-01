@@ -3,14 +3,18 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using ServiceLocator.Utilities;
 using ServiceLocator.Events;
 using ServiceLocator.Wave;
+using ServiceLocator.Player;
 
 namespace ServiceLocator.UI
 {
-    public class UIService : GenericMonoSingleton<UIService>
+    public class UIService : MonoBehaviour
     {
+        [SerializeField] private EventService eventService;
+        [SerializeField] private WaveService waveService;
+        [SerializeField] private PlayerService playerService;
+
         [Header("Gameplay Panel")]
         [SerializeField] private GameObject gameplayPanel;
         [SerializeField] private TextMeshProUGUI healthText;
@@ -39,7 +43,7 @@ namespace ServiceLocator.UI
 
         private void Start()
         {
-            monkeySelectionController = new MonkeySelectionUIController(cellContainer, monkeyCellPrefab, monkeyCellScriptableObjects);
+            monkeySelectionController = new MonkeySelectionUIController(playerService, cellContainer, monkeyCellPrefab, monkeyCellScriptableObjects);
             MonkeySelectionPanel.SetActive(false);
             monkeySelectionController.SetActive(false);
 
@@ -54,7 +58,7 @@ namespace ServiceLocator.UI
             SubscribeToEvents();
         }
 
-        public void SubscribeToEvents() => EventService.Instance.OnMapSelected.AddListener(OnMapSelected);
+        public void SubscribeToEvents() => eventService.OnMapSelected.AddListener(OnMapSelected);
 
         public void OnMapSelected(int mapID)
         {
@@ -67,7 +71,7 @@ namespace ServiceLocator.UI
 
         private void OnNextWaveButton()
         {
-            WaveService.Instance.StarNextWave();
+            waveService.StarNextWave();
             SetNextWaveButton(false);
         }
 
