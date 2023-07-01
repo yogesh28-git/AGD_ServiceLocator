@@ -1,6 +1,12 @@
 using System;
 using System.Collections.Generic;
 
+/*  This part of the code demonstrates the Object Pooling design pattern.
+ *  If you're interested in learning about Object Pooling, you can find
+ *  a dedicated course on Outscal's website.
+ *  Link: https://outscal.com/courses
+ * */
+
 namespace ServiceLocator.Utilities
 {
     /// <summary>
