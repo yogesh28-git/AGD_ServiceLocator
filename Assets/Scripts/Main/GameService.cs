@@ -1,5 +1,4 @@
 using UnityEngine;
-using ServiceLocator.Utilities;
 using ServiceLocator.Events;
 using ServiceLocator.Map;
 using ServiceLocator.Wave;
@@ -9,17 +8,15 @@ using ServiceLocator.UI;
 
 namespace ServiceLocator.Main
 {
-    public class GameService : GenericMonoSingleton<GameService>
+    public class GameService : MonoBehaviour
     {
         // Services:
-        public EventService EventService { get; private set; }
-        public MapService MapService { get; private set; }
-        public WaveService WaveService { get; private set; }
-        public SoundService SoundService { get; private set; }
-        public PlayerService PlayerService { get; private set; }
-
+        private EventService eventService;
+        private MapService mapService;
+        private WaveService waveService;
+        private SoundService soundService;
+        private PlayerService playerService;
         [SerializeField] private UIService uiService;
-        public UIService UIService;
 
 
         // Scriptable Objects:
@@ -28,25 +25,38 @@ namespace ServiceLocator.Main
         [SerializeField] private SoundScriptableObject soundScriptableObject;
         [SerializeField] private PlayerScriptableObject playerScriptableObject;
 
-        // Scene Referneces:
-        [SerializeField] private AudioSource SFXSource;
-        [SerializeField] private AudioSource BGSource;
-        [SerializeField] private Transform ProjectileContainer;
-        [SerializeField] private Transform BloonContainer;
+        // Scene References:
+        [SerializeField] private AudioSource sfxSource;
+        [SerializeField] private AudioSource bgMusicSource;
+        [SerializeField] private Transform bloonContainer;
+        [SerializeField] private Transform projectileContainer;
 
         private void Start()
         {
-            EventService = new EventService();
-            UIService.SubscribeToEvents();
-            MapService = new MapService(mapScriptableObject);
-            WaveService = new WaveService(waveScriptableObject, BloonContainer);
-            SoundService = new SoundService(soundScriptableObject, SFXSource, BGSource);
-            PlayerService = new PlayerService(playerScriptableObject, ProjectileContainer);
+            InitializeServices();
+            InjectDependencies();
+        }
+
+        private void InitializeServices()
+        {
+            eventService = new EventService();
+            soundService = new SoundService(soundScriptableObject, sfxSource, bgMusicSource);
+            mapService = new MapService(mapScriptableObject);
+            playerService = new PlayerService(playerScriptableObject, projectileContainer);
+            waveService = new WaveService(waveScriptableObject);
+        }
+
+        private void InjectDependencies()
+        {
+            mapService.Init(eventService);
+            uiService.Init(waveService, playerService, eventService);
+            playerService.Init(mapService, uiService, soundService);
+            waveService.Init(uiService, mapService, playerService, soundService, eventService, bloonContainer);
         }
 
         private void Update()
         {
-            PlayerService.Update();
+            playerService.Update();
         }
-    } 
+    }
 }

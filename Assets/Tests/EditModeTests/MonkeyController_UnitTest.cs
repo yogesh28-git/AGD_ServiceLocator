@@ -4,6 +4,7 @@ using UnityEngine;
 using ServiceLocator.Player;
 using ServiceLocator.Player.Projectile;
 using ServiceLocator.Wave.Bloon;
+using ServiceLocator.Sound;
 
 public class MonkeyController_UnitTest
 {
@@ -14,7 +15,8 @@ public class MonkeyController_UnitTest
     {
         MonkeyScriptableObject monkeySO = CreateDummyMonkeySO();
         ProjectilePool projectilePool = CreateDummyProjectilePool();
-        monkeyController = new MonkeyController(monkeySO, projectilePool);
+        SoundService soundService = CreateDummySoundService();
+        monkeyController = new MonkeyController(monkeySO, projectilePool, soundService);
     }
 
     private MonkeyScriptableObject CreateDummyMonkeySO()
@@ -38,7 +40,24 @@ public class MonkeyController_UnitTest
         ProjectileView projectilePrefab = new GameObject().AddComponent<ProjectileView>();
         List<ProjectileScriptableObject> projectileSOs = new List<ProjectileScriptableObject>();
         projectileSOs.Add(ScriptableObject.CreateInstance<ProjectileScriptableObject>());
-        return new ProjectilePool(projectilePrefab, projectileSOs, projectileContainer);
+        
+        PlayerService playerService = CreaateDummyPlayerService(projectilePrefab, projectileSOs, projectileContainer);
+        return new ProjectilePool(playerService, projectilePrefab, projectileSOs, projectileContainer);
+    }
+
+    private PlayerService CreaateDummyPlayerService(ProjectileView projectilePrefab, List<ProjectileScriptableObject> projectileSOs, Transform projectileContainer)
+    {
+        PlayerScriptableObject playerSO = ScriptableObject.CreateInstance<PlayerScriptableObject>();
+        playerSO.ProjectilePrefab = projectilePrefab;
+        playerSO.ProjectileScriptableObjects = projectileSOs;
+        return new PlayerService(playerSO, projectileContainer);
+    }
+
+    private SoundService CreateDummySoundService()
+    {
+        SoundScriptableObject soundSO = ScriptableObject.CreateInstance<SoundScriptableObject>();
+        soundSO.audioList = new Sounds[0];
+        return new SoundService(soundSO, new GameObject().AddComponent<AudioSource>(), new GameObject().AddComponent<AudioSource>());
     }
 
     [Test]
