@@ -72,7 +72,7 @@ namespace ServiceLocator.Player
             if (monkeyCost > money)
                 return;
 
-            if (GameService.Instance.MapService.TryGetSpawnPosition(dropPosition, out Vector3 spawnPosition))
+            if (GameService.Instance.MapService.TryGetMonkeySpawnPosition(dropPosition, out Vector3 spawnPosition))
             {
                 SpawnMonkey(monkeyType, spawnPosition);
                 GameService.Instance.SoundService.PlaySoundEffects(Sound.SoundType.SpawnMonkey);

@@ -17,12 +17,14 @@ namespace ServiceLocator.Map
         public MapService(MapScriptableObject mapScriptableObject)
         {
             this.mapScriptableObject = mapScriptableObject;
-            GameService.Instance.EventService.OnMapSelected.AddListener(LoadMap);
+            SubscribeToEvents();
         }
 
-        public void LoadMap(int mapId)
+        private void SubscribeToEvents() => GameService.Instance.EventService.OnMapSelected.AddListener(LoadMap);
+
+        private void LoadMap(int mapId)
         {
-            currentMapData = mapScriptableObject.MapDataByLevels.Find(mapData => mapData.MapID == mapId);
+            currentMapData = mapScriptableObject.MapDatas.Find(mapData => mapData.MapID == mapId);
             currentGrid = Object.Instantiate(currentMapData.MapPrefab);
             currentTileMap = currentGrid.GetComponentInChildren<Tilemap>();
         }
@@ -31,7 +33,7 @@ namespace ServiceLocator.Map
 
         public Vector3 GetBloonSpawnPositionForCurrentMap() => currentMapData.SpawningPoint;
 
-        public bool TryGetSpawnPosition(Vector3 cursorPosition, out Vector3 spawnPosition)
+        public bool TryGetMonkeySpawnPosition(Vector3 cursorPosition, out Vector3 spawnPosition)
         {
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(cursorPosition);
             Vector3Int mouseToCell = currentGrid.WorldToCell(new Vector3(mousePosition.x, mousePosition.y, 0));
@@ -44,7 +46,7 @@ namespace ServiceLocator.Map
             }
             else
             {
-                spawnPosition = default;
+                spawnPosition = Vector3.zero;
                 return false;
             }
         }
@@ -52,7 +54,7 @@ namespace ServiceLocator.Map
         private bool CanSpawnOnPosition(Vector3 centerCell, Vector3Int cellPosition)
         {
             Collider2D[] colliders = Physics2D.OverlapCircleAll(centerCell, 0.1f);
-            return InisdeTilemapBounds(cellPosition) && HasClickedOnEmptyTile(colliders) && !IsOverLappingMonkey(colliders);
+            return InisdeTilemapBounds(cellPosition) && !HasClickedOnObstacle(colliders) && !IsOverLappingMonkey(colliders);
         }
 
         private bool InisdeTilemapBounds(Vector3Int mouseToCell)
@@ -61,14 +63,14 @@ namespace ServiceLocator.Map
             return tilemapBounds.Contains(mouseToCell);
         }
 
-        private bool HasClickedOnEmptyTile(Collider2D[] colliders)
+        private bool HasClickedOnObstacle(Collider2D[] colliders)
         {
             foreach (Collider2D collider in colliders)
             {
                 if (collider.GetComponent<TilemapCollider2D>() != null)
-                    return false;
+                    return true;
             }
-            return true;
+            return false;
         }
 
         private bool IsOverLappingMonkey(Collider2D[] colliders)

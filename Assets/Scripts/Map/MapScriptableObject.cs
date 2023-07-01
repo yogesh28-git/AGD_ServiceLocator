@@ -6,7 +6,7 @@ namespace ServiceLocator.Map
     [CreateAssetMenu(fileName = "MapScriptableObject", menuName = "ScriptableObjects/MapScriptableObject")]
     public class MapScriptableObject : ScriptableObject
     {
-        public List<MapData> MapDataByLevels;
+        public List<MapData> MapDatas;
     }
 
     [System.Serializable]
