@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using ServiceLocator.Utilities;
 
-/*  This part of the code demonstrates the Object Pooling design pattern.
+/*  This script demonstrates the implementation of Object Pool design pattern.
  *  If you're interested in learning about Object Pooling, you can find
  *  a dedicated course on Outscal's website.
  *  Link: https://outscal.com/courses
