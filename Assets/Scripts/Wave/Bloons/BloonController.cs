@@ -68,6 +68,7 @@ namespace ServiceLocator.Wave.Bloon
         public void FollowWayPoints()
         {
             if(currentWaypointIndex < waypoints.Count)
+            //if(IsWaypointsCleared())  TODO
             {
                 Vector3 direction = waypoints[currentWaypointIndex] - bloonView.transform.position;
                 bloonView.transform.Translate(direction.normalized * bloonScriptableObject.Speed * Time.deltaTime);
@@ -89,13 +90,13 @@ namespace ServiceLocator.Wave.Bloon
 
         private void PopBloon()
         {
-            currentState = BloonState.POPPED;
+            SetState(BloonState.POPPED);
             bloonView.PopBloon();
         }
 
         public void OnPopAnimationPlayed()
         {
-            if (bloonScriptableObject.LayeredBloons.Count > 0)
+            if (bloonScriptableObject.LayeredBloons.Count > 0) // readable 
                 waveService.SpawnBloons(bloonScriptableObject.LayeredBloons, bloonView.transform.position, currentWaypointIndex);
 
             playerService.GetReward(bloonScriptableObject.Reward);
@@ -103,6 +104,9 @@ namespace ServiceLocator.Wave.Bloon
         }
 
         public BloonType GetBloonType() => bloonScriptableObject.Type;
+
+        //TODO
+        private void SetState(BloonState state) => currentState = state;
     }
 
     public enum BloonState

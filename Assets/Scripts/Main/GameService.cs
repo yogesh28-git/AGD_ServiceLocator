@@ -28,7 +28,9 @@ namespace ServiceLocator.Main
         // Scene References:
         [SerializeField] private AudioSource sfxSource;
         [SerializeField] private AudioSource bgMusicSource;
-        [SerializeField] private Transform bloonContainer;
+
+        //spawn dynamically
+        [SerializeField] private Transform bloonContainer; 
         [SerializeField] private Transform projectileContainer;
 
         private void Start()

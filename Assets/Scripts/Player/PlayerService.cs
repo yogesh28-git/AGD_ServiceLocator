@@ -21,6 +21,7 @@ namespace ServiceLocator.Player
         private int health;
         private int money;
         public int Money => money;
+        //public int Money { private set; public get; }
 
         public PlayerService(PlayerScriptableObject playerScriptableObject, Transform projectileContainer)
         {
