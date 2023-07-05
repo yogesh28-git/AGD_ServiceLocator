@@ -10,6 +10,7 @@ namespace ServiceLocator.Player.Projectile
         private ProjectileScriptableObject projectileScriptableObject;
 
         private BloonController target;
+        private ProjectileState currentState;
 
         public ProjectileController(ProjectileView projectilePrefab, Transform projectileContainer)
         {
@@ -19,10 +20,10 @@ namespace ServiceLocator.Player.Projectile
 
         public void Init(ProjectileScriptableObject projectileScriptableObject)
         {
-            target = null;
             this.projectileScriptableObject = projectileScriptableObject;
             projectileView.SetSprite(projectileScriptableObject.Sprite);
             projectileView.gameObject.SetActive(true);
+            target = null;
         }
 
         public void SetPosition(Vector3 spawnPosition) => projectileView.transform.position = spawnPosition;
@@ -30,6 +31,7 @@ namespace ServiceLocator.Player.Projectile
         public void SetTarget(BloonController target)
         {
             this.target = target;
+            SetState(ProjectileState.ACTIVE);
             RotateTowardsTarget();
         }
 
@@ -42,20 +44,33 @@ namespace ServiceLocator.Player.Projectile
 
         public void UpdateProjectileMotion()
         {
-            if(target != null)
+            if(target != null && currentState == ProjectileState.ACTIVE)
                 projectileView.transform.Translate(Vector2.left * projectileScriptableObject.Speed * Time.deltaTime, Space.Self);
         }
 
         public void OnHitBloon(BloonController bloonHit)
         {
-            bloonHit.TakeDamage(projectileScriptableObject.Damage);
-            ResetProjectile();
+            if (currentState == ProjectileState.ACTIVE)
+            {
+                bloonHit.TakeDamage(projectileScriptableObject.Damage);
+                ResetProjectile();
+                SetState(ProjectileState.HIT_TARGET);
+            }
         }
 
         public void ResetProjectile()
         {
+            target = null;
             projectileView.gameObject.SetActive(false);
             GameService.Instance.PlayerService.ReturnProjectileToPool(this);
+        }
+
+        private void SetState(ProjectileState newState) => currentState = newState;
+
+        private enum ProjectileState
+        {
+            ACTIVE,
+            HIT_TARGET
         }
     }
 }

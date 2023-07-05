@@ -28,3 +28,7 @@ MonoBehaviour:
     - {x: 3.5, y: -3.5, z: 0}
     - {x: -2.5, y: -3.5, z: 0}
     - {x: -2.5, y: -6, z: 0}
+  TileOverlay: {fileID: 0}
+  DefaultTileColor: {r: 1, g: 1, b: 1, a: 0}
+  SpawnableTileColor: {r: 0, g: 0, b: 1, a: 0.39215687}
+  NonSpawnableTileColor: {r: 1, g: 0, b: 0, a: 0.39215687}

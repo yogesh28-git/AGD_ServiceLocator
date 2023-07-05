@@ -34,11 +34,10 @@ public class MonkeyController_UnitTest
 
     private ProjectilePool CreateDummyProjectilePool()
     {
-        Transform projectileContainer = new GameObject().transform;
         ProjectileView projectilePrefab = new GameObject().AddComponent<ProjectileView>();
         List<ProjectileScriptableObject> projectileSOs = new List<ProjectileScriptableObject>();
         projectileSOs.Add(ScriptableObject.CreateInstance<ProjectileScriptableObject>());
-        return new ProjectilePool(projectilePrefab, projectileSOs, projectileContainer);
+        return new ProjectilePool(projectilePrefab, projectileSOs);
     }
 
     [Test]

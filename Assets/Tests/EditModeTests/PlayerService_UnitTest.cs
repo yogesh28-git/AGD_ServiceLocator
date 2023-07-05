@@ -13,9 +13,7 @@ public class PlayerService_UnitTest
     public void Setup()
     {
         PlayerScriptableObject playerSO = CreateDummyPlayerSO();
-        Transform projectileContainer = new GameObject().transform;
-
-        playerService = new PlayerService(playerSO, projectileContainer);
+        playerService = new PlayerService(playerSO);
     }
 
     private PlayerScriptableObject CreateDummyPlayerSO()

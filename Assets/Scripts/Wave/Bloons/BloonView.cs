@@ -19,6 +19,8 @@ namespace ServiceLocator.Wave.Bloon
 
         public void SetRenderer(Sprite spriteToSet) => spriteRenderer.sprite = spriteToSet;
 
+        public void SetSortingOrder(int sortingOrder) => spriteRenderer.sortingOrder = sortingOrder;
+
         public void PopBloon()
         {
             animator.enabled = true;

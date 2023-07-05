@@ -31,17 +31,15 @@ namespace ServiceLocator.Main
         // Scene Referneces:
         [SerializeField] private AudioSource SFXSource;
         [SerializeField] private AudioSource BGSource;
-        [SerializeField] private Transform ProjectileContainer;
-        [SerializeField] private Transform BloonContainer;
 
         private void Start()
         {
             EventService = new EventService();
             UIService.SubscribeToEvents();
             MapService = new MapService(mapScriptableObject);
-            WaveService = new WaveService(waveScriptableObject, BloonContainer);
+            WaveService = new WaveService(waveScriptableObject);
             SoundService = new SoundService(soundScriptableObject, SFXSource, BGSource);
-            PlayerService = new PlayerService(playerScriptableObject, ProjectileContainer);
+            PlayerService = new PlayerService(playerScriptableObject);
         }
 
         private void Update()
