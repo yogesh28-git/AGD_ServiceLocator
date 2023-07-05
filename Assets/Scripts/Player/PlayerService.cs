@@ -23,10 +23,10 @@ namespace ServiceLocator.Player
         public int Money => money;
         //public int Money { private set; public get; }
 
-        public PlayerService(PlayerScriptableObject playerScriptableObject, Transform projectileContainer)
+        public PlayerService(PlayerScriptableObject playerScriptableObject)
         {
             this.playerScriptableObject = playerScriptableObject;
-            projectilePool = new ProjectilePool(this, playerScriptableObject.ProjectilePrefab, playerScriptableObject.ProjectileScriptableObjects, projectileContainer);
+            projectilePool = new ProjectilePool(this, playerScriptableObject.ProjectilePrefab, playerScriptableObject.ProjectileScriptableObjects);
         }
 
         public void Init(MapService mapService, UIService uiService, SoundService soundService)

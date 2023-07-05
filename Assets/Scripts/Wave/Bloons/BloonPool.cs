@@ -27,8 +27,7 @@ namespace ServiceLocator.Wave.Bloon
                         WaveService waveService, 
                         SoundService soundService, 
                         BloonView bloonPrefab, 
-                        List<BloonScriptableObject> bloonScriptableObjects, 
-                        Transform bloonContainer)
+                        List<BloonScriptableObject> bloonScriptableObjects)
         {
             this.playerService = playerService;
             this.waveService = waveService;
@@ -36,7 +35,7 @@ namespace ServiceLocator.Wave.Bloon
 
             this.bloonPrefab = bloonPrefab;
             this.bloonScriptableObjects = bloonScriptableObjects;
-            this.bloonContainer = bloonContainer;
+            this.bloonContainer = new GameObject("Bloon Container").transform;
         }
 
         public BloonController GetBloon(BloonType bloonType)

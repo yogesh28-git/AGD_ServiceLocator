@@ -42,7 +42,7 @@ public class MonkeyController_UnitTest
         projectileSOs.Add(ScriptableObject.CreateInstance<ProjectileScriptableObject>());
         
         PlayerService playerService = CreaateDummyPlayerService(projectilePrefab, projectileSOs, projectileContainer);
-        return new ProjectilePool(playerService, projectilePrefab, projectileSOs, projectileContainer);
+        return new ProjectilePool(playerService, projectilePrefab, projectileSOs);
     }
 
     private PlayerService CreaateDummyPlayerService(ProjectileView projectilePrefab, List<ProjectileScriptableObject> projectileSOs, Transform projectileContainer)
@@ -50,7 +50,7 @@ public class MonkeyController_UnitTest
         PlayerScriptableObject playerSO = ScriptableObject.CreateInstance<PlayerScriptableObject>();
         playerSO.ProjectilePrefab = projectilePrefab;
         playerSO.ProjectileScriptableObjects = projectileSOs;
-        return new PlayerService(playerSO, projectileContainer);
+        return new PlayerService(playerSO);
     }
 
     private SoundService CreateDummySoundService()

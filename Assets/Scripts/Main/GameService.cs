@@ -29,10 +29,6 @@ namespace ServiceLocator.Main
         [SerializeField] private AudioSource sfxSource;
         [SerializeField] private AudioSource bgMusicSource;
 
-        //spawn dynamically
-        [SerializeField] private Transform bloonContainer; 
-        [SerializeField] private Transform projectileContainer;
-
         private void Start()
         {
             InitializeServices();
@@ -44,7 +40,7 @@ namespace ServiceLocator.Main
             eventService = new EventService();
             soundService = new SoundService(soundScriptableObject, sfxSource, bgMusicSource);
             mapService = new MapService(mapScriptableObject);
-            playerService = new PlayerService(playerScriptableObject, projectileContainer);
+            playerService = new PlayerService(playerScriptableObject);
             waveService = new WaveService(waveScriptableObject);
         }
 
@@ -53,7 +49,7 @@ namespace ServiceLocator.Main
             mapService.Init(eventService);
             uiService.Init(waveService, playerService, eventService);
             playerService.Init(mapService, uiService, soundService);
-            waveService.Init(uiService, mapService, playerService, soundService, eventService, bloonContainer);
+            waveService.Init(uiService, mapService, playerService, soundService, eventService);
         }
 
         private void Update()
