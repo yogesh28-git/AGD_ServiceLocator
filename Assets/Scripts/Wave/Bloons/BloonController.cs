@@ -27,10 +27,14 @@ namespace ServiceLocator.Wave.Bloon
         public void Init(BloonScriptableObject bloonScriptableObject)
         {
             this.bloonScriptableObject = bloonScriptableObject;
+            InitializeVariables();
+            SetState(BloonState.ACTIVE);
+        }
+
+        private void InitializeVariables()
+        {
             bloonView.SetRenderer(bloonScriptableObject.Sprite);
             currentHealth = bloonScriptableObject.Health;
-            
-            currentState = BloonState.ACTIVE;
             waypoints = new List<Vector3>();
         }
 
@@ -46,10 +50,14 @@ namespace ServiceLocator.Wave.Bloon
             currentWaypointIndex = startingWaypointIndex;
         }
 
+        public void SetOrderInLayer(int orderInLayer) => bloonView.SetSortingOrder(orderInLayer);
+
         public void TakeDamage(int damageToTake)
         {
-            currentHealth = currentHealth - damageToTake <= 0 ? 0 : currentHealth -= damageToTake;
-            if(currentHealth <= 0 && currentState == BloonState.ACTIVE)
+            int reducedHealth = currentHealth - damageToTake;
+            currentHealth = reducedHealth <= 0 ? 0 : reducedHealth;
+
+            if (currentHealth <= 0 && currentState == BloonState.ACTIVE)
             {
                 PopBloon();
                 SoundService.Instance.PlaySoundEffects(Sound.SoundType.BloonPop);
@@ -58,42 +66,59 @@ namespace ServiceLocator.Wave.Bloon
 
         public void FollowWayPoints()
         {
-            if(currentWaypointIndex < waypoints.Count)
+            if(HasReachedFinalWaypoint())
             {
-                Vector3 direction = waypoints[currentWaypointIndex] - bloonView.transform.position;
-                bloonView.transform.Translate(direction.normalized * bloonScriptableObject.Speed * Time.deltaTime);
-                if (direction.magnitude < waypointThreshold)
-                    currentWaypointIndex++;
+                ResetBloon();
             }
             else
             {
-                ReachedFinalWayPoint();
+                Vector3 direction = GetDirectionToMoveTowards();
+                MoveBloon(direction);
+                if (HasReachedNextWaypoint(direction.magnitude))
+                    currentWaypointIndex++;
             }
         }
 
-        private void ReachedFinalWayPoint()
+        private bool HasReachedFinalWaypoint() => currentWaypointIndex == waypoints.Count;
+
+        private bool HasReachedNextWaypoint(float distance) => distance < waypointThreshold;
+
+        private void ResetBloon()
         {
             WaveService.Instance.RemoveBloon(this);
             PlayerService.Instance.TakeDamage(bloonScriptableObject.Damage);
             bloonView.gameObject.SetActive(false);
         }
 
+        private Vector3 GetDirectionToMoveTowards() => waypoints[currentWaypointIndex] - bloonView.transform.position;
+
+        private void MoveBloon(Vector3 moveDirection) => bloonView.transform.Translate(moveDirection.normalized * bloonScriptableObject.Speed * Time.deltaTime);
+
         private void PopBloon()
         {
-            currentState = BloonState.POPPED;
+            SetState(BloonState.POPPED);
             bloonView.PopBloon();
         }
 
         public void OnPopAnimationPlayed()
         {
-            if (bloonScriptableObject.LayeredBloons.Count > 0)
-                WaveService.Instance.SpawnBloons(bloonScriptableObject.LayeredBloons, bloonView.transform.position, currentWaypointIndex);
+            if (HasLayeredBloons())
+                SpawnLayeredBloons();
 
             PlayerService.Instance.GetReward(bloonScriptableObject.Reward);
             WaveService.Instance.RemoveBloon(this);
         }
 
+        private bool HasLayeredBloons() => bloonScriptableObject.LayeredBloons.Count > 0;
+
+        private void SpawnLayeredBloons() => WaveService.Instance.SpawnBloons(bloonScriptableObject.LayeredBloons,
+                                                                              bloonView.transform.position,
+                                                                              currentWaypointIndex,
+                                                                              bloonScriptableObject.LayerBloonSpawnRate);
+
         public BloonType GetBloonType() => bloonScriptableObject.Type;
+
+        private void SetState(BloonState state) => currentState = state;
     }
 
     public enum BloonState

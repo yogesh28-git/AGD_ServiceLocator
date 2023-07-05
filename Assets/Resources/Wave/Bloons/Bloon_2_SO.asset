@@ -19,3 +19,4 @@ MonoBehaviour:
   Speed: 3
   Sprite: {fileID: 21300000, guid: 915f49b044ce260499e22574848f3397, type: 3}
   LayeredBloons: 0000000000000000000000000000000000000000
+  LayerBloonSpawnRate: 0.2

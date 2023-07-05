@@ -11,7 +11,6 @@ namespace ServiceLocator.Player
     public class PlayerService : GenericMonoSingleton<PlayerService>
     {
         [SerializeField] public PlayerScriptableObject playerScriptableObject;
-        [SerializeField] public Transform projectileContainer;
 
         private ProjectilePool projectilePool;
 
@@ -23,7 +22,7 @@ namespace ServiceLocator.Player
 
         private void Start()
         {
-            projectilePool = new ProjectilePool(playerScriptableObject.ProjectilePrefab, playerScriptableObject.ProjectileScriptableObjects, projectileContainer);
+            projectilePool = new ProjectilePool(playerScriptableObject.ProjectilePrefab, playerScriptableObject.ProjectileScriptableObjects);
             InitializeVariables();
         }
 
@@ -64,6 +63,14 @@ namespace ServiceLocator.Player
         }
 
         private bool IsMonkeyCollider(Collider2D collider) => collider != null && !collider.isTrigger && collider.GetComponent<MonkeyView>() != null;
+
+        public void ValidateSpawnPosition(int monkeyCost, Vector3 dropPosition)
+        {
+            if (monkeyCost > Money)
+                return;
+
+            MapService.Instance.ValidateSpawnPosition(dropPosition);
+        }
 
         public void TrySpawningMonkey(MonkeyType monkeyType, int monkeyCost, Vector3 dropPosition)
         {

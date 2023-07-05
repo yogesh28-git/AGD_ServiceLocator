@@ -16,11 +16,11 @@ namespace ServiceLocator.Wave.Bloon
         private List<BloonScriptableObject> bloonScriptableObjects;
         private Transform bloonContainer;
 
-        public BloonPool(BloonView bloonPrefab, List<BloonScriptableObject> bloonScriptableObjects, Transform bloonContainer)
+        public BloonPool(WaveScriptableObject waveScriptableObject)
         {
-            this.bloonPrefab = bloonPrefab;
-            this.bloonScriptableObjects = bloonScriptableObjects;
-            this.bloonContainer = bloonContainer;
+            bloonPrefab = waveScriptableObject.BloonPrefab;
+            bloonScriptableObjects = waveScriptableObject.BloonScriptableObjects;
+            bloonContainer = new GameObject("Bloon Container").transform;
         }
 
         public BloonController GetBloon(BloonType bloonType)

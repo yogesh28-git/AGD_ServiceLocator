@@ -7,6 +7,10 @@ namespace ServiceLocator.Map
     public class MapScriptableObject : ScriptableObject
     {
         public List<MapData> MapDatas;
+        public GameObject TileOverlay;
+        public Color DefaultTileColor;
+        public Color SpawnableTileColor;
+        public Color NonSpawnableTileColor;
     }
 
     [System.Serializable]
