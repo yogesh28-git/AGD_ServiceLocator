@@ -33,7 +33,11 @@ namespace ServiceLocator.UI
 
         public void OnPointerDown(PointerEventData eventData) => monkeyImage.color = new Color(1, 1, 1, 0.6f);
 
-        public void OnDrag(PointerEventData eventData) => rectTransform.anchoredPosition += eventData.delta;
+        public void OnDrag(PointerEventData eventData)
+        {
+            rectTransform.anchoredPosition += eventData.delta;
+            owner.MonkeyDraggedAt(eventData.position);
+        }
 
         public void OnEndDrag(PointerEventData eventData)
         {

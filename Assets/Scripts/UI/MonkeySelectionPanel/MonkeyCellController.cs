@@ -21,6 +21,11 @@ namespace ServiceLocator.UI
             monkeyCellView.ConfigureCellUI(monkeyCellSO.Sprite, monkeyCellSO.Name, monkeyCellSO.Cost);
         }
 
+        public void MonkeyDraggedAt(Vector3 dragPosition)
+        {
+            playerService.ValidateSpawnPosition(monkeyCellSO.Cost, dragPosition);
+        }
+
         public void MonkeyDroppedAt(Vector3 dropPosition)
         {
             playerService.TrySpawningMonkey(monkeyCellSO.Type, monkeyCellSO.Cost, dropPosition);

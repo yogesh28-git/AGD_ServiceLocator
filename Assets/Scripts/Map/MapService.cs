@@ -16,8 +16,14 @@ namespace ServiceLocator.Map
         private Grid currentGrid;
         private Tilemap currentTileMap;
         private MapData currentMapData;
+        private SpriteRenderer tileOverlay;
 
-        public MapService(MapScriptableObject mapScriptableObject) => this.mapScriptableObject = mapScriptableObject;
+        public MapService(MapScriptableObject mapScriptableObject)
+        {
+            this.mapScriptableObject = mapScriptableObject;
+            tileOverlay = Object.Instantiate(mapScriptableObject.TileOverlay).GetComponent<SpriteRenderer>();
+            ResetTileOverlay();
+        }
 
         public void Init(EventService eventService)
         {
@@ -38,11 +44,49 @@ namespace ServiceLocator.Map
 
         public Vector3 GetBloonSpawnPositionForCurrentMap() => currentMapData.SpawningPoint;
 
+        private void ResetTileOverlay() => SetTileOverlayColor(TileOverlayColor.TRANSPARENT);
+
+        private void SetTileOverlayColor(TileOverlayColor colorToSet)
+        {
+            switch(colorToSet)
+            {
+                case TileOverlayColor.TRANSPARENT:
+                    tileOverlay.color = mapScriptableObject.DefaultTileColor;
+                    break;
+                case TileOverlayColor.SPAWNABLE:
+                    tileOverlay.color = mapScriptableObject.SpawnableTileColor;
+                    break;
+                case TileOverlayColor.NON_SPAWNABLE:
+                    tileOverlay.color = mapScriptableObject.NonSpawnableTileColor;
+                    break;
+            }
+        }
+
+        public void ValidateSpawnPosition(Vector3 cursorPosition)
+        {
+            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(cursorPosition);
+            Vector3Int cellPosition = GetCellPosition(mousePosition);
+            Vector3 cellCenter = GetCenterOfCell(cellPosition);
+
+            if(CanSpawnOnPosition(cellCenter, cellPosition))
+            {
+                tileOverlay.transform.position = cellCenter;
+                SetTileOverlayColor(TileOverlayColor.SPAWNABLE);
+            }
+            else
+            {
+                tileOverlay.transform.position = cellCenter;
+                SetTileOverlayColor(TileOverlayColor.NON_SPAWNABLE);
+            }
+        }
+
         public bool TryGetMonkeySpawnPosition(Vector3 cursorPosition, out Vector3 spawnPosition)
         {
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(cursorPosition);
             Vector3Int cellPosition = GetCellPosition(mousePosition);
             Vector3 cellCenter = GetCenterOfCell(cellPosition);
+
+            ResetTileOverlay();
 
             if (CanSpawnOnPosition(cellCenter, cellPosition))
             {
@@ -90,6 +134,13 @@ namespace ServiceLocator.Map
                     return true;
             }
             return false;
+        }
+
+        private enum TileOverlayColor
+        {
+            TRANSPARENT,
+            SPAWNABLE,
+            NON_SPAWNABLE
         }
     }
 }

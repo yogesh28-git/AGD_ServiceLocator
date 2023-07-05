@@ -88,6 +88,14 @@ namespace ServiceLocator.Player
             selectedMonkeyView.MakeRangeVisible(true);
         }
 
+        public void ValidateSpawnPosition(int monkeyCost, Vector3 dropPosition)
+        {
+            if (monkeyCost > Money)
+                return;
+
+            mapService.ValidateSpawnPosition(dropPosition);
+        }
+
         public void TrySpawningMonkey(MonkeyType monkeyType, int monkeyCost, Vector3 dropPosition)
         {
             if (monkeyCost > Money)
@@ -96,7 +104,7 @@ namespace ServiceLocator.Player
             if (mapService.TryGetMonkeySpawnPosition(dropPosition, out Vector3 spawnPosition))
             {
                 SpawnMonkey(monkeyType, spawnPosition);
-                soundService.PlaySoundEffects(Sound.SoundType.SpawnMonkey);
+                soundService.PlaySoundEffects(SoundType.SpawnMonkey);
             }
         }
 
