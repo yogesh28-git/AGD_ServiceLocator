@@ -8,23 +8,34 @@ namespace ServiceLocator.Player
 {
     public class MonkeyController
     {
+        // Dependencies:
         private SoundService soundService;
-        private MonkeyView monkeyView;
         private MonkeyScriptableObject monkeyScriptableObject;
         private ProjectilePool projectilePool;
-
+        private MonkeyView monkeyView;
+        
         private List<BloonController> bloonsInRange;
         private float attackTimer;
 
-        public MonkeyController(MonkeyScriptableObject monkeyScriptableObject, ProjectilePool projectilePool, SoundService soundService)
+        public MonkeyController(SoundService soundService, MonkeyScriptableObject monkeyScriptableObject, ProjectilePool projectilePool)
         {
             this.soundService = soundService;
+            this.monkeyScriptableObject = monkeyScriptableObject;
+            this.projectilePool = projectilePool;
+
+            CreateMonkeyView();
+            InitializeVariables();
+        }
+
+        private void CreateMonkeyView()
+        {
             monkeyView = Object.Instantiate(monkeyScriptableObject.Prefab);
             monkeyView.SetController(this);
             monkeyView.SetTriggerRadius(monkeyScriptableObject.Range);
-            
-            this.monkeyScriptableObject = monkeyScriptableObject;
-            this.projectilePool = projectilePool;
+        }
+
+        private void InitializeVariables()
+        {
             bloonsInRange = new List<BloonController>();
             ResetAttackTimer();
         }
@@ -66,12 +77,17 @@ namespace ServiceLocator.Player
             attackTimer -= Time.deltaTime;
             if(attackTimer <= 0)
             {
-                ProjectileController projectile = projectilePool.GetProjectile(monkeyScriptableObject.projectileType);
-                projectile.SetPosition(monkeyView.transform.position);
-                projectile.SetTarget(targetBloon);
+                CreateProjectileForTarget(targetBloon);
                 soundService.PlaySoundEffects(SoundType.MonkeyShoot);
                 ResetAttackTimer();
             }
+        }
+
+        private void CreateProjectileForTarget(BloonController targetBloon)
+        {
+            ProjectileController projectile = projectilePool.GetProjectile(monkeyScriptableObject.projectileType);
+            projectile.SetPosition(monkeyView.transform.position);
+            projectile.SetTarget(targetBloon);
         }
 
         private void ResetAttackTimer() => attackTimer = monkeyScriptableObject.AttackRate;

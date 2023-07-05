@@ -15,6 +15,7 @@ namespace ServiceLocator.UI
             GetComponent<Button>().onClick.AddListener(OnMapButtonClicked);
         }
 
+        // To Learn more about Events and Observer Pattern, check out the course list here: https://outscal.com/courses
         private void OnMapButtonClicked() =>  eventService.OnMapSelected.InvokeEvent(MapId);
     }
 }

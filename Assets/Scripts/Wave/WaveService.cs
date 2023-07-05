@@ -41,21 +41,11 @@ namespace ServiceLocator.Wave
 
         private void InitializeBloons()
         {
-            // todo
-            bloonPool = new BloonPool(playerService, 
-                                        this, 
-                                        soundService, 
-                                        waveScriptableObject.BloonTypeDataMap.BloonPrefab, 
-                                        waveScriptableObject.BloonTypeDataMap.BloonScriptableObjects);
-
-            //bloonPool = new BloonPool(this, playerService, soundService, waveScriptableObject, bloonContainer);
-
+            bloonPool = new BloonPool(this, playerService, soundService, waveScriptableObject);
             activeBloons = new List<BloonController>();
         }
 
-        // todo
         private void SubscribeToEvents() => eventService.OnMapSelected.AddListener(LoadWaveDataForMap);
-
 
         private void LoadWaveDataForMap(int mapId)
         {

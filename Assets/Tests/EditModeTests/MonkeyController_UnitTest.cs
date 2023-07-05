@@ -16,7 +16,7 @@ public class MonkeyController_UnitTest
         MonkeyScriptableObject monkeySO = CreateDummyMonkeySO();
         ProjectilePool projectilePool = CreateDummyProjectilePool();
         SoundService soundService = CreateDummySoundService();
-        monkeyController = new MonkeyController(monkeySO, projectilePool, soundService);
+        monkeyController = new MonkeyController(soundService, monkeySO, projectilePool);
     }
 
     private MonkeyScriptableObject CreateDummyMonkeySO()
@@ -36,16 +36,15 @@ public class MonkeyController_UnitTest
 
     private ProjectilePool CreateDummyProjectilePool()
     {
-        Transform projectileContainer = new GameObject().transform;
         ProjectileView projectilePrefab = new GameObject().AddComponent<ProjectileView>();
         List<ProjectileScriptableObject> projectileSOs = new List<ProjectileScriptableObject>();
         projectileSOs.Add(ScriptableObject.CreateInstance<ProjectileScriptableObject>());
         
-        PlayerService playerService = CreaateDummyPlayerService(projectilePrefab, projectileSOs, projectileContainer);
+        PlayerService playerService = CreaateDummyPlayerService(projectilePrefab, projectileSOs);
         return new ProjectilePool(playerService, projectilePrefab, projectileSOs);
     }
 
-    private PlayerService CreaateDummyPlayerService(ProjectileView projectilePrefab, List<ProjectileScriptableObject> projectileSOs, Transform projectileContainer)
+    private PlayerService CreaateDummyPlayerService(ProjectileView projectilePrefab, List<ProjectileScriptableObject> projectileSOs)
     {
         PlayerScriptableObject playerSO = ScriptableObject.CreateInstance<PlayerScriptableObject>();
         playerSO.ProjectilePrefab = projectilePrefab;

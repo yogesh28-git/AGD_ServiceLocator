@@ -19,9 +19,7 @@ namespace ServiceLocator.Player
         private List<MonkeyController> activeMonkeys;
         private MonkeyView selectedMonkeyView;
         private int health;
-        private int money;
-        public int Money => money;
-        //public int Money { private set; public get; }
+        public int Money { get; private set; }
 
         public PlayerService(PlayerScriptableObject playerScriptableObject)
         {
@@ -39,11 +37,11 @@ namespace ServiceLocator.Player
 
         private void InitializeVariables()
         {
-            health = playerScriptableObject.Health;
-            money = playerScriptableObject.Money;
-            uiService.UpdateHealthUI(health);
-            uiService.UpdateMoneyUI(money);
             activeMonkeys = new List<MonkeyController>();
+            health = playerScriptableObject.Health;
+            Money = playerScriptableObject.Money;
+            uiService.UpdateHealthUI(health);
+            uiService.UpdateMoneyUI(Money);
         }
 
         public void Update()
@@ -55,22 +53,19 @@ namespace ServiceLocator.Player
 
             if(Input.GetMouseButtonDown(0))
             {
-                UpdateSelectedMonkeyDisplay();
+                TrySelectingMonkey();
             }
         }
 
-        private void UpdateSelectedMonkeyDisplay()
+        private void TrySelectingMonkey()
         {
-            Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            RaycastHit2D[] hits = Physics2D.RaycastAll(mousePosition, Vector2.zero);
+            RaycastHit2D[] hits = GetRaycastHitsAtMousePoition();
 
-            foreach(RaycastHit2D hit in hits)
+            foreach (RaycastHit2D hit in hits)
             {
                 if(IsMonkeyCollider(hit.collider))
                 {
-                    selectedMonkeyView?.MakeRangeVisible(false);
-                    selectedMonkeyView = hit.collider.GetComponent<MonkeyView>();
-                    selectedMonkeyView.MakeRangeVisible(true);
+                    SetSelectedMonkeyView(hit.collider.GetComponent<MonkeyView>());
                     return;
                 }
             }
@@ -78,11 +73,24 @@ namespace ServiceLocator.Player
             selectedMonkeyView?.MakeRangeVisible(false);
         }
 
+        private RaycastHit2D[] GetRaycastHitsAtMousePoition()
+        {
+            Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            return Physics2D.RaycastAll(mousePosition, Vector2.zero);
+        }
+
         private bool IsMonkeyCollider(Collider2D collider) => collider != null && !collider.isTrigger && collider.GetComponent<MonkeyView>() != null;
+
+        private void SetSelectedMonkeyView(MonkeyView monkeyViewToBeSelected)
+        {
+            selectedMonkeyView?.MakeRangeVisible(false);
+            selectedMonkeyView = monkeyViewToBeSelected;
+            selectedMonkeyView.MakeRangeVisible(true);
+        }
 
         public void TrySpawningMonkey(MonkeyType monkeyType, int monkeyCost, Vector3 dropPosition)
         {
-            if (monkeyCost > money)
+            if (monkeyCost > Money)
                 return;
 
             if (mapService.TryGetMonkeySpawnPosition(dropPosition, out Vector3 spawnPosition))
@@ -94,31 +102,38 @@ namespace ServiceLocator.Player
 
         public void SpawnMonkey(MonkeyType monkeyType, Vector3 spawnPosition)
         {
-            MonkeyScriptableObject monkeySO = playerScriptableObject.MonkeyScriptableObjects.Find(so => so.Type == monkeyType);
-            MonkeyController monkey = new MonkeyController(monkeySO, projectilePool, soundService);
+            MonkeyScriptableObject monkeyScriptableObject = GetMonkeyScriptableObjectByType(monkeyType);
+            MonkeyController monkey = new MonkeyController(soundService, monkeyScriptableObject, projectilePool);
+            
             monkey.SetPosition(spawnPosition);
             activeMonkeys.Add(monkey);
-
-            money -= monkeySO.Cost;
-            uiService.UpdateMoneyUI(money);
+            DeductMoney(monkeyScriptableObject.Cost);
         }
+
+        private MonkeyScriptableObject GetMonkeyScriptableObjectByType(MonkeyType monkeyType) => playerScriptableObject.MonkeyScriptableObjects.Find(so => so.Type == monkeyType);
 
         public void ReturnProjectileToPool(ProjectileController projectileToReturn) => projectilePool.ReturnItem(projectileToReturn);
         
         public void TakeDamage(int damageToTake)
         {
-            health = health - damageToTake <= 0 ? 0 : health - damageToTake;
+            int reducedHealth = health - damageToTake;
+            health = reducedHealth <= 0 ? 0 : health - damageToTake;
+            
             uiService.UpdateHealthUI(health);
             if(health <= 0)
-            {
                 PlayerDeath();
-            }
+        }
+
+        private void DeductMoney(int moneyToDedecut)
+        {
+            Money -= moneyToDedecut;
+            uiService.UpdateMoneyUI(Money);
         }
 
         public void GetReward(int reward)
         {
-            money += reward;
-            uiService?.UpdateMoneyUI(money);
+            Money += reward;
+            uiService?.UpdateMoneyUI(Money);
         }
 
         private void PlayerDeath() => uiService.UpdateGameEndUI(false);

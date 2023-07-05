@@ -21,10 +21,10 @@ namespace ServiceLocator.Player.Projectile
 
         public void Init(ProjectileScriptableObject projectileScriptableObject)
         {
-            target = null;
             this.projectileScriptableObject = projectileScriptableObject;
             projectileView.SetSprite(projectileScriptableObject.Sprite);
             projectileView.gameObject.SetActive(true);
+            target = null;
         }
 
         public void SetPosition(Vector3 spawnPosition) => projectileView.transform.position = spawnPosition;

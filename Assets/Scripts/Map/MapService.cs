@@ -17,10 +17,7 @@ namespace ServiceLocator.Map
         private Tilemap currentTileMap;
         private MapData currentMapData;
 
-        public MapService(MapScriptableObject mapScriptableObject)
-        {
-            this.mapScriptableObject = mapScriptableObject;
-        }
+        public MapService(MapScriptableObject mapScriptableObject) => this.mapScriptableObject = mapScriptableObject;
 
         public void Init(EventService eventService)
         {
@@ -44,12 +41,12 @@ namespace ServiceLocator.Map
         public bool TryGetMonkeySpawnPosition(Vector3 cursorPosition, out Vector3 spawnPosition)
         {
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(cursorPosition);
-            Vector3Int mouseToCell = currentGrid.WorldToCell(new Vector3(mousePosition.x, mousePosition.y, 0));
-            Vector3 centerCell = currentGrid.GetCellCenterWorld(mouseToCell);
+            Vector3Int cellPosition = GetCellPosition(mousePosition);
+            Vector3 cellCenter = GetCenterOfCell(cellPosition);
 
-            if (CanSpawnOnPosition(centerCell, mouseToCell))
+            if (CanSpawnOnPosition(cellCenter, cellPosition))
             {
-                spawnPosition = centerCell;
+                spawnPosition = cellCenter;
                 return true;
             }
             else
@@ -58,6 +55,10 @@ namespace ServiceLocator.Map
                 return false;
             }
         }
+
+        private Vector3Int GetCellPosition(Vector3 mousePosition) => currentGrid.WorldToCell(new Vector3(mousePosition.x, mousePosition.y, 0));
+
+        private Vector3 GetCenterOfCell(Vector3Int cellPosition) => currentGrid.GetCellCenterWorld(cellPosition);
 
         private bool CanSpawnOnPosition(Vector3 centerCell, Vector3Int cellPosition)
         {
@@ -86,9 +87,7 @@ namespace ServiceLocator.Map
             foreach (Collider2D collider in colliders)
             {
                 if (collider.gameObject.GetComponent<MonkeyView>() != null && !collider.isTrigger)
-                {
                     return true;
-                }
             }
             return false;
         }
