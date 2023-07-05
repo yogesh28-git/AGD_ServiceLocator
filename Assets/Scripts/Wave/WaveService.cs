@@ -69,10 +69,16 @@ namespace ServiceLocator.Wave
                 BloonController bloon = bloonPool.GetBloon(bloonType);
                 bloon.SetPosition(spawnPosition);
                 bloon.SetWayPoints(mapService.GetWayPointsForCurrentMap(), startingWaypointIndex);
-                
-                activeBloons.Add(bloon);
+
+                AddBloon(bloon);
                 await Task.Delay(Mathf.RoundToInt(spawnRate * 1000));
             }
+        }
+
+        private void AddBloon(BloonController bloonToAdd)
+        {
+            activeBloons.Add(bloonToAdd);
+            bloonToAdd.SetOrderInLayer(-activeBloons.Count);
         }
 
         public void RemoveBloon(BloonController bloon)

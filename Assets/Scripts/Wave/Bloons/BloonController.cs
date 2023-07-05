@@ -59,6 +59,8 @@ namespace ServiceLocator.Wave.Bloon
             currentWaypointIndex = startingWaypointIndex;
         }
 
+        public void SetOrderInLayer(int orderInLayer) => bloonView.SetSortingOrder(orderInLayer);
+
         public void TakeDamage(int damageToTake)
         {
             int reducedHealth = currentHealth - damageToTake;
