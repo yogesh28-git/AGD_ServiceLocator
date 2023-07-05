@@ -14,10 +14,13 @@ namespace ServiceLocator.Player.Projectile
 
         private void Update()
         {
-            if (!spriteRenderer.isVisible)
+            if (ProjectileOutOfBounds())
                 controller.ResetProjectile();
+            
             controller?.UpdateProjectileMotion();
         }
+
+        private bool ProjectileOutOfBounds() => !spriteRenderer.isVisible;
 
         public void SetSprite(Sprite spriteToSet) => spriteRenderer.sprite = spriteToSet;
 

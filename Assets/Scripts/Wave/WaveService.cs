@@ -57,12 +57,12 @@ namespace ServiceLocator.Wave
         public void StarNextWave()
         {
             currentWaveId++;
-            var bloonsToSpawn = waveDatas.Find(waveData => waveData.WaveID == currentWaveId).ListOfBloons;
+            var bloonsToSpawn = GetBloonsForCurrentWave();
             var spawnPosition = mapService.GetBloonSpawnPositionForCurrentMap();
-            SpawnBloons(bloonsToSpawn, spawnPosition, 0);
+            SpawnBloons(bloonsToSpawn, spawnPosition, 0, waveScriptableObject.SpawnRate);
         }
 
-        public async void SpawnBloons(List<BloonType> bloonsToSpawn, Vector3 spawnPosition, int startingWaypointIndex)
+        public async void SpawnBloons(List<BloonType> bloonsToSpawn, Vector3 spawnPosition, int startingWaypointIndex, float spawnRate)
         {
             foreach(BloonType bloonType in bloonsToSpawn)
             {
@@ -71,7 +71,7 @@ namespace ServiceLocator.Wave
                 bloon.SetWayPoints(mapService.GetWayPointsForCurrentMap(), startingWaypointIndex);
                 
                 activeBloons.Add(bloon);
-                await Task.Delay(Mathf.RoundToInt(waveScriptableObject.SpawnRate * 1000));
+                await Task.Delay(Mathf.RoundToInt(spawnRate * 1000));
             }
         }
 
@@ -90,6 +90,8 @@ namespace ServiceLocator.Wave
                     uiService.SetNextWaveButton(true);
             }
         }
+
+        private List<BloonType> GetBloonsForCurrentWave() => waveDatas.Find(waveData => waveData.WaveID == currentWaveId).ListOfBloons;
 
         private bool HasCurrentWaveEnded() => activeBloons.Count == 0;
 
