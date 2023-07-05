@@ -38,8 +38,8 @@ namespace ServiceLocator.Wave.Bloon
             this.bloonScriptableObject = bloonScriptableObject;
             bloonView.SetRenderer(bloonScriptableObject.Sprite);
             currentHealth = bloonScriptableObject.Health;
-            
-            currentState = BloonState.ACTIVE;
+
+            SetState(BloonState.ACTIVE);
             waypoints = new List<Vector3>();
         }
 
@@ -105,7 +105,6 @@ namespace ServiceLocator.Wave.Bloon
 
         public BloonType GetBloonType() => bloonScriptableObject.Type;
 
-        //TODO
         private void SetState(BloonState state) => currentState = state;
     }
 
