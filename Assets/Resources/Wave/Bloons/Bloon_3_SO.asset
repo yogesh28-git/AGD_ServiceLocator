@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Bloon_3_SO
   m_EditorClassIdentifier: 
   Type: 2
-  Health: 50
+  Health: 1
   Damage: 50
   Reward: 50
   Speed: 1
