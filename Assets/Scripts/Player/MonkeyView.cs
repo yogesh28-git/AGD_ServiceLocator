@@ -12,15 +12,14 @@ namespace ServiceLocator.Player
 
         private void Awake()
         {
-            rangeTriggerCollider =  GetComponent<CircleCollider2D>();
+            rangeTriggerCollider = GetComponent<CircleCollider2D>();
             monkeyAnimator = GetComponent<Animator>();
         }
-
         public void SetController(MonkeyController controller) => this.controller = controller;
 
         public void SetTriggerRadius(float radiusToSet)
         {
-            if(rangeTriggerCollider != null)
+            if (rangeTriggerCollider != null)
                 rangeTriggerCollider.radius = radiusToSet;
 
             RangeSpriteRenderer.transform.localScale = new Vector3(radiusToSet, radiusToSet, 1);
