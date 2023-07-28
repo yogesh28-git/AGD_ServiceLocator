@@ -19,7 +19,7 @@ namespace ServiceLocator.Main
         public PlayerService PlayerService { get; private set; }
 
         [SerializeField] private UIService uiService;
-        public UIService UIService;
+        public UIService UIService => uiService;
 
 
         // Scriptable Objects:
@@ -46,5 +46,5 @@ namespace ServiceLocator.Main
         {
             PlayerService.Update();
         }
-    } 
+    }
 }
