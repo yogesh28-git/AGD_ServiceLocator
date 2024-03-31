@@ -9,7 +9,7 @@ using ServiceLocator.Sound;
 
 namespace ServiceLocator.Wave
 {
-    public class WaveService : MonoBehaviour
+    public class WaveService : GenericMonoSingleton<WaveService>
     {
         [SerializeField] private SoundService soundService;
 
