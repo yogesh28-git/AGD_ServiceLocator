@@ -8,7 +8,7 @@ using ServiceLocator.Sound;
 
 namespace ServiceLocator.Player
 {
-    public class PlayerService : GenericMonoSingleton<PlayerService>
+    public class PlayerService
     {
         [SerializeField] public PlayerScriptableObject playerScriptableObject;
 
@@ -20,9 +20,10 @@ namespace ServiceLocator.Player
         private int money;
         public int Money => money;
 
-        private void Start()
+        public PlayerService(PlayerScriptableObject playerScriptableObject)
         {
-            projectilePool = new ProjectilePool(playerScriptableObject.ProjectilePrefab, playerScriptableObject.ProjectileScriptableObjects);
+            this.playerScriptableObject = playerScriptableObject;
+            projectilePool = new ProjectilePool( playerScriptableObject.ProjectilePrefab, playerScriptableObject.ProjectileScriptableObjects);
             InitializeVariables();
         }
 
