@@ -611,8 +611,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1284288943, guid: 15430d56842a28843b57fd250730f142, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -7.4999695
+      value: -7.5
       objectReference: {fileID: 0}
+    - target: {fileID: 7182248003563694489, guid: 15430d56842a28843b57fd250730f142, type: 3}
+      propertyPath: gameService
+      value: 
+      objectReference: {fileID: 1275803724}
     - target: {fileID: 7182248005041137930, guid: 15430d56842a28843b57fd250730f142, type: 3}
       propertyPath: monkeyCellScriptableObjects.Array.size
       value: 3

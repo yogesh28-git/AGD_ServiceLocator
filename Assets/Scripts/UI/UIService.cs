@@ -4,6 +4,9 @@ using TMPro;
 using UnityEngine.UI;
 using ServiceLocator.Main;
 using UnityEngine.SceneManagement;
+using ServiceLocator.Events;
+using ServiceLocator.Wave;
+using ServiceLocator.Player;
 
 namespace ServiceLocator.UI
 {
@@ -35,9 +38,14 @@ namespace ServiceLocator.UI
         [SerializeField] private Button quitButton;
 
 
+        private EventService eventService;
+        private WaveService waveService;
+        private PlayerService playerService;
+
+
         private void Start()
         {
-            monkeySelectionController = new MonkeySelectionUIController(cellContainer, monkeyCellPrefab, monkeyCellScriptableObjects);
+            monkeySelectionController = new MonkeySelectionUIController(cellContainer, monkeyCellPrefab, monkeyCellScriptableObjects );
             MonkeySelectionPanel.SetActive(false);
             monkeySelectionController.SetActive(false);
 
@@ -50,7 +58,17 @@ namespace ServiceLocator.UI
             playAgainButton.onClick.AddListener(OnPlayAgainButtonClicked);
         }
 
-        public void SubscribeToEvents() => GameService.Instance.EventService.OnMapSelected.AddListener(OnMapSelected);
+        public void Init( WaveService waveService, EventService eventService, PlayerService playerService )
+        {
+            this.waveService = waveService;
+            this.eventService = eventService;
+            this.playerService = playerService;
+            SubscribeToEvents( );
+
+            monkeySelectionController.Init( playerService );
+        }
+
+        public void SubscribeToEvents() => eventService.OnMapSelected.AddListener(OnMapSelected);
 
         public void OnMapSelected(int mapID)
         {
@@ -63,7 +81,7 @@ namespace ServiceLocator.UI
 
         private void OnNextWaveButton()
         {
-            GameService.Instance.WaveService.StarNextWave();
+            waveService.StarNextWave();
             SetNextWaveButton(false);
         }
 
